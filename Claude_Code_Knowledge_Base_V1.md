@@ -633,7 +633,7 @@ Puis :
 
 ## Phase 2 — Premier traitement manuel
 
-🟡 **En cours** : récupération et transcript validés avec Apify ; reste la connexion à Notion et le traitement de bout en bout (voir section 23).
+✅ **Terminée** (25/09/2026) : chaîne Apify → Claude Code → Notion validée de bout en bout, déduplication par `shortCode` comprise (voir section 23).
 
 Tester le système avec **une seule URL de Reel**.
 
@@ -1050,17 +1050,21 @@ Le champ **`pertinent`** permet d'ignorer ou de marquer les Reels hors sujet (Cl
 
 ## Étape 4 : Test 1, écriture Notion à blanc
 
-- [ ] Demander la création d'une page Reel **factice** dans 🎬 Reels, avec toutes les propriétés remplies.
-- [ ] Créer un Insight factice relié à ce Reel et au Topic « Skills ».
-- [ ] Vérifier dans Notion : les relations, les vues liées dans la page du Topic, les statuts, les types de propriétés (Select, Date, URL).
-- [ ] Corriger les écarts, puis supprimer les données factices.
+> Réalisée le 25/09/2026 avec un vrai Reel (`DYh3sFeotZD`) au lieu de données factices : création du Reel, d'un nouveau Topic « Workflows & automatisations » depuis le modèle, de deux Insights et des relations.
+
+- [x] Demander la création d'une page Reel **factice** dans 🎬 Reels, avec toutes les propriétés remplies.
+- [x] Créer un Insight factice relié à ce Reel et au Topic « Skills ».
+- [x] Vérifier dans Notion : les relations, les vues liées dans la page du Topic, les statuts, les types de propriétés (Select, Date, URL).
+- [x] Corriger les écarts, puis supprimer les données factices.
 
 ## Étape 5 : Test 2, le Reel de test de bout en bout (phase 2)
 
-- [ ] Fournir l'URL du Reel de test (`DcES6LItnCw`).
-- [ ] Claude Code : récupère via Apify, analyse (titre, pertinence, résumé, sujet principal, topics, insights), vérifie que le `shortCode` n'existe pas déjà dans 🎬 Reels, puis crée le Reel, les Insights et les relations.
-- [ ] Vérifier chaque champ dans Notion, en particulier : sujet principal = Skills, Topic lié = Skills, Insights en 🔴 À vérifier, statut du Reel = 🟢 Traité.
-- [ ] Relancer la même URL : le système doit reconnaître le doublon et **ne rien recréer**.
+> Réalisée le 25/09/2026. Test de doublon avec l'URL contenant les paramètres de suivi : shortCode trouvé dans Notion avant tout appel à Apify, rien recréé, aucun coût.
+
+- [x] Fournir l'URL du Reel de test (`DcES6LItnCw`).
+- [x] Claude Code : récupère via Apify, analyse (titre, pertinence, résumé, sujet principal, topics, insights), vérifie que le `shortCode` n'existe pas déjà dans 🎬 Reels, puis crée le Reel, les Insights et les relations.
+- [x] Vérifier chaque champ dans Notion, en particulier : sujet principal = Skills, Topic lié = Skills, Insights en 🔴 À vérifier, statut du Reel = 🟢 Traité.
+- [x] Relancer la même URL : le système doit reconnaître le doublon et **ne rien recréer**.
 
 ## Étape 6 : Formaliser les règles de classification et de déduplication
 
