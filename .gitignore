@@ -1,0 +1,13 @@
+# Secrets (token Apify, etc.)
+.env
+.env.*
+
+# Sorties Apify (données personnelles, liens qui expirent)
+dataset_*.json
+
+# Réglages locaux de Claude Code
+.claude/settings.local.json
+
+# Système
+.DS_Store
+Thumbs.db
