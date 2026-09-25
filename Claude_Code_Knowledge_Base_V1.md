@@ -1037,10 +1037,10 @@ Le champ **`pertinent`** permet d'ignorer ou de marquer les Reels hors sujet (Cl
 
 ## Étape 2 : Connecter Notion
 
-- [ ] Créer une connexion Notion par **jeton d'accès** (et non le connecteur officiel en OAuth, qui donne accès à tout l'espace de travail), puis déclarer le serveur MCP `@notionhq/notion-mcp-server` dans `.mcp.json`, avec le jeton lu depuis la variable d'environnement `NOTION_TOKEN`.
-- [ ] **Partager la page « Claude Code Knowledge Base » avec la connexion** : sans cela, les bases restent invisibles.
-- [ ] Vérifier la procédure exacte dans la documentation de Notion et de Claude Code (elle peut changer).
-- [ ] Contrôle : demander à Claude Code de lister les trois bases et leurs propriétés.
+- [x] Créer une connexion Notion par **jeton d'accès** (et non le connecteur officiel en OAuth, qui donne accès à tout l'espace de travail), puis déclarer le serveur MCP `@notionhq/notion-mcp-server` dans `.mcp.json`, avec le jeton lu depuis la variable d'environnement `NOTION_TOKEN`.
+- [x] **Partager la page « Claude Code Knowledge Base » avec la connexion** : sans cela, les bases restent invisibles.
+- [x] Vérifier la procédure exacte dans la documentation de Notion et de Claude Code (elle peut changer).
+- [x] Contrôle : demander à Claude Code de lister les trois bases et leurs propriétés.
 
 ## Étape 3 : Connecter Apify
 

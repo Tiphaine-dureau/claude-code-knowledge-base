@@ -17,41 +17,57 @@ Conception complète, décisions et feuille de route : `Claude_Code_Knowledge_Ba
 
 Notion ne sert qu'au stockage et à la consultation. Les règles métier vivent ici et dans les skills du projet, pas dans Notion.
 
+Accès via le serveur MCP `notion` du projet (connexion par jeton, limitée à cette page). Les noms ci-dessous sont les noms **exacts** dans Notion (casse, accents, emojis compris) : les utiliser tels quels.
+
 ### 🎬 Reels (les sources)
+
+Data source : `3d41c46e-c16a-806a-8a58-000b9125ff1d`
 
 | Propriété | Type |
 |---|---|
 | Reel | Title |
 | URL | URL |
 | Auteur | Text |
-| Date | Date |
-| Date d'import | Date |
+| Date | Date (publication) |
+| Date import | Date |
 | Caption | Text |
 | Transcript | Text |
 | Résumé | Text |
 | Sujet principal | Select |
 | Topics liés | Relation → Topics |
-| Insights associés | Relation → Insights |
-| Statut | Select : 🔴 À traiter · 🟡 En cours · 🟢 Traité |
+| 💡 Insights associés | Relation → Insights (synchronisée avec `Source`) |
+| Statut | Select : `a traiter` · `en cours` · `traité` |
 
-### 📚 Topics (les sujets)
+### 🗂️ Topics (les sujets)
+
+Data source : `3d41c46e-c16a-8022-8d72-000b95f0613d`
+
+| Propriété | Type |
+|---|---|
+| Topics | Title |
+| ▶️ Reels | Relation → Reels (synchronisée avec `Topics liés`) |
+| 💡 Insights | Relation → Insights (synchronisée avec `Topics`) |
 
 Page de documentation avec les sections : 🧠 Définition · 🎯 À quoi ça sert ? · ⚙️ Comment ça fonctionne ? · 🛠️ Mise en pratique · 💡 Insights clés · 🎬 Reels associés · 🔗 Ressources complémentaires.
 
+La page nommée « Template » dans cette base n'est pas un Topic : l'ignorer.
+
 ### 💡 Insights (ce qu'on retient)
+
+Data source : `3d41c46e-c16a-8022-9ec4-000b8f7e0ba2`
 
 | Propriété | Type |
 |---|---|
 | Insight | Title |
-| Topic | Relation → Topics |
+| Topics | Relation → Topics |
 | Source | Relation → Reels |
-| Statut | Select : 🔴 À vérifier · 🟡 À tester · 🟢 Validé |
+| Statut | Select : `A vérifier` · `A tester` · `Validé` |
 
-Un nouvel Insight est toujours créé en 🔴 À vérifier.
+Un nouvel Insight est toujours créé en `A vérifier`.
 
 ### Sujets principaux (liste fermée)
 
-Skills · Agents · Subagents · MCP · CLAUDE.md · Context engineering · Hooks
+Skills · Agents · Subagents · MCP · CLAUDE.md · Context Engineering · Hooks
 
 Le champ « Sujet principal » prend obligatoirement une de ces valeurs. De nouveaux Topics peuvent apparaître, mais seulement pour des sujets réellement distincts.
 
