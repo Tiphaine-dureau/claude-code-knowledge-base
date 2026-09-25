@@ -1089,7 +1089,7 @@ Le champ **`pertinent`** permet d'ignorer ou de marquer les Reels hors sujet (Cl
 
 - [ ] Établir la liste des comptes surveillés (une dizaine).
 - [ ] Limiter chaque run aux **2 ou 3 derniers Reels** (ou aux Reels de moins de 24 h avec le filtre de date de l'actor) : le coût dépend du nombre de résultats renvoyés, pas du nombre de comptes.
-- [ ] Ignorer tout Reel dont le `shortCode` existe déjà dans la base.
+- [ ] Ignorer tout Reel dont le `shortCode` existe déjà dans la base, y compris les Reels `écarté` (non pertinents, gardés en fiche minimale pour ne pas les re-scraper).
 - [ ] Choisir le mode d'exécution planifiée : Claude Code en mode non interactif sur un planning, ou script.
 - [ ] Trancher la question du **coût du transcript** (voir section 24).
 - [ ] Prévoir une gestion d'erreur simple : si un Reel échoue, le laisser au statut 🔴 À traiter au lieu de perdre l'information.

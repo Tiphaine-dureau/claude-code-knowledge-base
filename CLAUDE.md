@@ -16,7 +16,7 @@ Conception complète, décisions et feuille de route : `Claude_Code_Knowledge_Ba
 ## Traitement d'un Reel (procédure)
 
 1. **shortCode** : l'extraire de l'URL fournie (`/reel/<shortCode>/` ou `/p/<shortCode>/`), paramètres de suivi ignorés.
-2. **Doublon** : chercher ce `shortCode` dans 🎬 Reels. S'il existe : s'arrêter, ne pas lancer Apify, signaler le Reel existant.
+2. **Doublon** : chercher ce `shortCode` dans 🎬 Reels. S'il existe (y compris en statut `écarté`) : s'arrêter, ne pas lancer Apify, signaler le Reel existant et son statut.
 3. **Apify** : lancer l'actor sur l'URL propre, transcript activé, lire uniquement les champs utiles.
 4. **Pertinence** : décider à partir du transcript (voir règles ci-dessous).
 5. **Analyse** : titre, résumé, sujet principal, Topics, Insights, caption utile ou non.
@@ -30,7 +30,13 @@ En cas d'erreur en cours de route, laisser le Reel en `a traiter` plutôt que de
 ### Pertinence
 
 - **Pertinent** : le contenu parle de Claude Code, ou de Claude utilisé pour construire quelque chose (skills, agents, MCP, automatisations, configuration, bonnes pratiques…).
-- **Non pertinent** : Claude n'est qu'un prétexte, ou le contenu parle d'un autre outil. Ne rien écrire dans Notion, donner la raison en une phrase dans le compte rendu.
+- **Non pertinent** : Claude n'est qu'un prétexte, ou le contenu parle d'un autre outil. Créer une **fiche minimale** dans 🎬 Reels, pour ne jamais relancer Apify dessus :
+  - `Reel` : titre court, `shortCode`, `URL` (propre), `Auteur`, `Date`, `Date import` ;
+  - `Résumé` : la raison de l'écart en une phrase, préfixée par « Écarté : » ;
+  - `Statut` : `écarté` ;
+  - rien d'autre : pas de transcript, de caption, de sujet principal, de Topic ni d'Insight.
+
+  Le signaler dans le compte rendu. Pour réintégrer un Reel écarté par erreur : repasser son statut en `a traiter` et relancer le traitement (Apify sera alors relancé).
 - En cas de doute : demander.
 
 ### Sujet principal et Topics
@@ -88,7 +94,7 @@ Data source : `3d41c46e-c16a-806a-8a58-000b9125ff1d`
 | Sujet principal | Select |
 | Topics liés | Relation → Topics |
 | 💡 Insights associés | Relation → Insights (synchronisée avec `Source`) |
-| Statut | Select : `a traiter` · `en cours` · `traité` |
+| Statut | Select : `a traiter` · `en cours` · `traité` · `écarté` (non pertinent, fiche minimale) |
 
 ### 🗂️ Topics (les sujets)
 
