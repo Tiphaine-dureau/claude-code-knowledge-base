@@ -11,7 +11,7 @@ Conception complète, décisions et feuille de route : `Claude_Code_Knowledge_Ba
 - Un Reel n'est pas un Topic. Plusieurs Reels alimentent le même Topic.
 - Avant de créer un Topic, chercher parmi les Topics existants. Si le sujet existe, l'enrichir.
 - La décision repose sur le **contenu réel** du Reel (transcript), pas sur la caption, souvent inexploitable (« commente X pour recevoir Y en DM »).
-- Avant toute insertion dans 🎬 Reels, vérifier que le `shortCode` n'y existe pas déjà. S'il existe : ne rien recréer.
+- Avant toute insertion dans 🎬 Reels, vérifier que le `shortCode` n'y existe pas déjà (filtre sur la propriété `shortCode`). S'il existe : ne rien recréer. Ne jamais dédupliquer sur l'URL complète : ses paramètres changent à chaque partage.
 
 ## Notion : page « Claude Code Knowledge Base »
 
@@ -26,6 +26,7 @@ Data source : `3d41c46e-c16a-806a-8a58-000b9125ff1d`
 | Propriété | Type |
 |---|---|
 | Reel | Title |
+| shortCode | Text (identifiant unique Instagram, clé de déduplication) |
 | URL | URL |
 | Auteur | Text |
 | Date | Date (publication) |
@@ -50,7 +51,7 @@ Data source : `3d41c46e-c16a-8022-8d72-000b95f0613d`
 
 Page de documentation avec les sections : 🧠 Définition · 🎯 À quoi ça sert ? · ⚙️ Comment ça fonctionne ? · 🛠️ Mise en pratique · 💡 Insights clés · 🎬 Reels associés · 🔗 Ressources complémentaires.
 
-La page nommée « Template » dans cette base n'est pas un Topic : l'ignorer.
+La base a un modèle Notion nommé « Template ». L'API le renvoie parmi les pages : ce n'est pas un Topic, l'ignorer.
 
 ### 💡 Insights (ce qu'on retient)
 
