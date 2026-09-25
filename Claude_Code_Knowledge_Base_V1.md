@@ -1074,6 +1074,7 @@ Le champ **`pertinent`** permet d'ignorer ou de marquer les Reels hors sujet (Cl
 - [x] Préciser le traitement d'un Reel non pertinent (`pertinent: false`).
 
 ## Étape 7 : Phase 3, tester la déduplication
+
 > 25/09/2026, premier lot de 7 Reels : 4 traités, 1 enrichissement sur un même Topic (Agents, deux Reels sur les loops : l'Insight commun a reçu les deux sources au lieu d'être dupliqué), 2 écartés. Reste à tester 3 à 5 Reels de **créateurs différents** sur un même sujet.
 
 - [ ] Choisir **3 à 5 Reels** sur le même sujet (par exemple les Skills), de créateurs différents.
