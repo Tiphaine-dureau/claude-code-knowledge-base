@@ -13,7 +13,7 @@ Conception complète, décisions et feuille de route : `Claude_Code_Knowledge_Ba
 - La décision repose sur le **contenu réel** du Reel (transcript), pas sur la caption, souvent inexploitable (« commente X pour recevoir Y en DM »).
 - Avant toute insertion dans 🎬 Reels, vérifier que le `shortCode` n'y existe pas déjà. S'il existe : ne rien recréer.
 
-## Notion : page « 📚 CLAUDE CODE »
+## Notion : page « Claude Code Knowledge Base »
 
 Notion ne sert qu'au stockage et à la consultation. Les règles métier vivent ici et dans les skills du projet, pas dans Notion.
 

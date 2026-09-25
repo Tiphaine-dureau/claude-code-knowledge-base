@@ -215,7 +215,7 @@ Cette séparation permettra plus tard de remplacer Notion par une autre solution
 L'espace principal est organisé ainsi :
 
 ```text
-📚 CLAUDE CODE
+📚 Claude Code Knowledge Base
 │
 ├── 📚 Topics
 ├── 🎬 Reels
@@ -1026,7 +1026,7 @@ Le champ **`pertinent`** permet d'ignorer ou de marquer les Reels hors sujet (Cl
 
 - [x] Prendre l'abonnement incluant **Claude Code** (vérifier l'offre sur le site d'Anthropic) et l'installer (l'application de bureau est plus simple qu'un terminal pour débuter).
 - [x] Vérifier que le compte **Apify** est prêt, avec son token personnel (Settings > API & Integrations).
-- [x] Vérifier l'accès à la page Notion « 📚 CLAUDE CODE » et à ses trois bases.
+- [x] Vérifier l'accès à la page Notion « Claude Code Knowledge Base » et à ses trois bases.
 
 ## Étape 1 : Préparer le projet Claude Code
 
@@ -1037,8 +1037,8 @@ Le champ **`pertinent`** permet d'ignorer ou de marquer les Reels hors sujet (Cl
 
 ## Étape 2 : Connecter Notion
 
-- [ ] Ajouter le connecteur Notion (serveur MCP) à Claude Code et autoriser l'accès à ton compte.
-- [ ] **Partager la page « CLAUDE CODE » avec l'intégration** : sans cela, les bases restent invisibles.
+- [ ] Créer une connexion Notion par **jeton d'accès** (et non le connecteur officiel en OAuth, qui donne accès à tout l'espace de travail), puis déclarer le serveur MCP `@notionhq/notion-mcp-server` dans `.mcp.json`, avec le jeton lu depuis la variable d'environnement `NOTION_TOKEN`.
+- [ ] **Partager la page « Claude Code Knowledge Base » avec la connexion** : sans cela, les bases restent invisibles.
 - [ ] Vérifier la procédure exacte dans la documentation de Notion et de Claude Code (elle peut changer).
 - [ ] Contrôle : demander à Claude Code de lister les trois bases et leurs propriétés.
 
