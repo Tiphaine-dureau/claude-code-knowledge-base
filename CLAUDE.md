@@ -13,6 +13,57 @@ Conception complète, décisions et feuille de route : `Claude_Code_Knowledge_Ba
 - La décision repose sur le **contenu réel** du Reel (transcript), pas sur la caption, souvent inexploitable (« commente X pour recevoir Y en DM »).
 - Avant toute insertion dans 🎬 Reels, vérifier que le `shortCode` n'y existe pas déjà (filtre sur la propriété `shortCode`). S'il existe : ne rien recréer. Ne jamais dédupliquer sur l'URL complète : ses paramètres changent à chaque partage.
 
+## Traitement d'un Reel (procédure)
+
+1. **shortCode** : l'extraire de l'URL fournie (`/reel/<shortCode>/` ou `/p/<shortCode>/`), paramètres de suivi ignorés.
+2. **Doublon** : chercher ce `shortCode` dans 🎬 Reels. S'il existe : s'arrêter, ne pas lancer Apify, signaler le Reel existant.
+3. **Apify** : lancer l'actor sur l'URL propre, transcript activé, lire uniquement les champs utiles.
+4. **Pertinence** : décider à partir du transcript (voir règles ci-dessous).
+5. **Analyse** : titre, résumé, sujet principal, Topics, Insights, caption utile ou non.
+6. **Écriture Notion**, dans cet ordre : Topic (création si validée) → Reel en `en cours` → Insights reliés au Reel et au Topic → enrichissement du Topic → Reel en `traité`.
+7. **Compte rendu** : lister ce qui a été créé, enrichi ou laissé de côté, avec les liens Notion.
+
+En cas d'erreur en cours de route, laisser le Reel en `a traiter` plutôt que de perdre l'information, et le signaler.
+
+## Règles de décision
+
+### Pertinence
+
+- **Pertinent** : le contenu parle de Claude Code, ou de Claude utilisé pour construire quelque chose (skills, agents, MCP, automatisations, configuration, bonnes pratiques…).
+- **Non pertinent** : Claude n'est qu'un prétexte, ou le contenu parle d'un autre outil. Ne rien écrire dans Notion, donner la raison en une phrase dans le compte rendu.
+- En cas de doute : demander.
+
+### Sujet principal et Topics
+
+- Le **sujet principal** prend une valeur de la liste fermée. Si aucune ne convient vraiment, ne pas forcer : proposer un nouveau sujet et **demander** avant de l'ajouter (option du Select + Topic créé depuis le modèle « Template » + liste fermée de ce fichier).
+- Rapprocher le contenu du Reel des Topics existants (lire leur page si besoin) et estimer la correspondance :
+  - **plus de 85 %** : même sujet → enrichir ce Topic, sans demander ;
+  - **60 à 85 %** : correspondance possible → **demander** en présentant le Topic candidat et l'alternative ;
+  - **moins de 60 %** : sujet nouveau → proposer la création et **demander**.
+- `Topics liés` contient le Topic principal, plus un Topic secondaire seulement si le Reel lui apporte une information réelle (pas une simple mention).
+
+### Enrichir un Topic
+
+- **Ajouter, ne jamais réécrire** : ne rien supprimer ni reformuler de ce qui existe (le texte a pu être écrit à la main).
+- Une section qui contient encore la phrase d'aide du modèle (« Qu'est-ce que c'est ? », etc.) peut être remplie : remplacer la phrase d'aide.
+- Une section déjà remplie : ajouter une puce seulement si le Reel apporte un élément **nouveau**, en citant la source (auteur, mois).
+- Si le Reel n'apporte rien de nouveau au Topic : le relier quand même (`Topics liés`), sans toucher au contenu.
+- Ne pas toucher aux vues liées ni aux sections « 💡 Insights clés » et « 🎬 Reels associés » (alimentées par les relations).
+
+### Insights
+
+- 1 à 3 par Reel. Chacun est une phrase autonome, compréhensible sans voir la vidéo, qui dit ce qu'on apprend ou ce qu'on peut faire.
+- Pas d'Insight pour une promesse vide (« je t'envoie la skill en DM ») ou une information générique.
+- Avant d'en créer un, lire les Insights du Topic : si la même idée existe déjà, **ajouter le Reel à sa `Source`** au lieu de créer un doublon (c'est ce qui fera apparaître les convergences entre créateurs).
+- Statut : toujours `A vérifier` à la création.
+
+### Champs du Reel
+
+- **Reel** (titre) : court, en français, dit ce qu'on apprend (pas le titre accrocheur de la vidéo).
+- **Résumé** : 2 à 4 phrases, factuelles, basées sur le transcript.
+- **Caption** : la stocker seulement si elle parle du contenu du Reel. Si elle ne contient qu'un appel à l'action (« commente X », « abonne-toi pour le guide »…) : laisser vide.
+- **Date import** : date du jour.
+
 ## Notion : page « Claude Code Knowledge Base »
 
 Notion ne sert qu'au stockage et à la consultation. Les règles métier vivent ici et dans les skills du projet, pas dans Notion.

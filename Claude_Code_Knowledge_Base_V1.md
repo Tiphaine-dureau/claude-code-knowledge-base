@@ -1068,10 +1068,10 @@ Le champ **`pertinent`** permet d'ignorer ou de marquer les Reels hors sujet (Cl
 
 ## Étape 6 : Formaliser les règles de classification et de déduplication
 
-- [ ] Écrire dans `CLAUDE.md` les règles de décision, en reprenant les seuils indicatifs de la section 5 (plus de 85 % : enrichir ; 60 à 85 % : à vérifier ; moins de 60 % : créer un Topic).
-- [ ] Préciser la marche à suivre pour une correspondance « à vérifier » (demander confirmation plutôt que trancher).
-- [ ] Préciser ce que veut dire « enrichir » : ajouter des éléments aux sections du Topic (fonctionnement, mise en pratique, ressources) et de nouveaux Insights, sans réécrire l'existant.
-- [ ] Préciser le traitement d'un Reel non pertinent (`pertinent: false`).
+- [x] Écrire dans `CLAUDE.md` les règles de décision, en reprenant les seuils indicatifs de la section 5 (plus de 85 % : enrichir ; 60 à 85 % : à vérifier ; moins de 60 % : créer un Topic).
+- [x] Préciser la marche à suivre pour une correspondance « à vérifier » (demander confirmation plutôt que trancher).
+- [x] Préciser ce que veut dire « enrichir » : ajouter des éléments aux sections du Topic (fonctionnement, mise en pratique, ressources) et de nouveaux Insights, sans réécrire l'existant.
+- [x] Préciser le traitement d'un Reel non pertinent (`pertinent: false`).
 
 ## Étape 7 : Phase 3, tester la déduplication
 
