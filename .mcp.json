@@ -6,6 +6,17 @@
       "env": {
         "NOTION_TOKEN": "${NOTION_TOKEN}"
       }
+    },
+    "apify": {
+      "command": "cmd",
+      "args": [
+        "/c", "npx", "-y", "@apify/actors-mcp-server",
+        "--tools", "apify/instagram-reel-scraper",
+        "--telemetry-enabled", "false"
+      ],
+      "env": {
+        "APIFY_TOKEN": "${APIFY_TOKEN}"
+      }
     }
   }
 }
