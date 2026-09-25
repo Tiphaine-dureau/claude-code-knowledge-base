@@ -68,7 +68,7 @@ Un nouvel Insight est toujours créé en `A vérifier`.
 
 ### Sujets principaux (liste fermée)
 
-Skills · Agents · Subagents · MCP · CLAUDE.md · Context Engineering · Hooks
+Skills · Agents · Subagents · MCP · CLAUDE.md · Context Engineering · Hooks · Workflows & automatisations
 
 Le champ « Sujet principal » prend obligatoirement une de ces valeurs. De nouveaux Topics peuvent apparaître, mais seulement pour des sujets réellement distincts.
 
