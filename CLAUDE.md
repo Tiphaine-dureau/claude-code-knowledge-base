@@ -70,6 +70,12 @@ En cas d'erreur en cours de route, laisser le Reel en `a traiter` plutôt que de
 - **Caption** : la stocker seulement si elle parle du contenu du Reel. Si elle ne contient qu'un appel à l'action (« commente X », « abonne-toi pour le guide »…) : laisser vide.
 - **Date import** : date du jour.
 
+### Contraintes techniques Notion
+
+- Un bloc de texte (`rich_text`) est limité à **2000 caractères** : découper les transcripts et captions longs en plusieurs éléments, de préférence entre deux phrases.
+- Dans le contenu des pages, écrire les noms de fichiers entre accents graves (`` `passation.md` ``) : sinon Notion les transforme en liens web (`http://passation.md`).
+- Traiter un lot de Reels du plus ancien au plus récent : le premier remplit le Topic, les suivants l'enrichissent.
+
 ## Notion : page « Claude Code Knowledge Base »
 
 Notion ne sert qu'au stockage et à la consultation. Les règles métier vivent ici et dans les skills du projet, pas dans Notion.
