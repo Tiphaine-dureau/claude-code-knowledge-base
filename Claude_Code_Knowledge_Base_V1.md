@@ -1024,16 +1024,16 @@ Le champ **`pertinent`** permet d'ignorer ou de marquer les Reels hors sujet (Cl
 
 ## Étape 0 : Prérequis
 
-- [ ] Prendre l'abonnement incluant **Claude Code** (vérifier l'offre sur le site d'Anthropic) et l'installer (l'application de bureau est plus simple qu'un terminal pour débuter).
-- [ ] Vérifier que le compte **Apify** est prêt, avec son token personnel (Settings > API & Integrations).
-- [ ] Vérifier l'accès à la page Notion « 📚 CLAUDE CODE » et à ses trois bases.
+- [x] Prendre l'abonnement incluant **Claude Code** (vérifier l'offre sur le site d'Anthropic) et l'installer (l'application de bureau est plus simple qu'un terminal pour débuter).
+- [x] Vérifier que le compte **Apify** est prêt, avec son token personnel (Settings > API & Integrations).
+- [x] Vérifier l'accès à la page Notion « 📚 CLAUDE CODE » et à ses trois bases.
 
 ## Étape 1 : Préparer le projet Claude Code
 
-- [ ] Créer un dossier dédié, par exemple `claude-code-knowledge-base`.
-- [ ] Y déposer ce document (V1.1) : il servira de contexte permanent au projet.
-- [ ] Créer un fichier `CLAUDE.md` court qui résume : l'objectif, les trois bases Notion et leurs propriétés, la liste fermée des sujets principaux, les statuts, et la règle « enrichir plutôt que dupliquer ».
-- [ ] Ne rien y écrire de secret (pas de token).
+- [x] Créer un dossier dédié, par exemple `claude-code-knowledge-base`.
+- [x] Y déposer ce document (V1.1) : il servira de contexte permanent au projet.
+- [x] Créer un fichier `CLAUDE.md` court qui résume : l'objectif, les trois bases Notion et leurs propriétés, la liste fermée des sujets principaux, les statuts, et la règle « enrichir plutôt que dupliquer ».
+- [x] Ne rien y écrire de secret (pas de token).
 
 ## Étape 2 : Connecter Notion
 
