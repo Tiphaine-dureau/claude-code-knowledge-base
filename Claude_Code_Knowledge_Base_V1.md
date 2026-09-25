@@ -1044,9 +1044,9 @@ Le champ **`pertinent`** permet d'ignorer ou de marquer les Reels hors sujet (Cl
 
 ## Étape 3 : Connecter Apify
 
-- [ ] Ajouter le serveur MCP d'Apify à Claude Code avec le token Apify.
-- [ ] Fixer un **plafond de coût par run** pour que le plan gratuit reste gratuit.
-- [ ] Contrôle : lancer l'actor sur une seule URL, option transcript activée, et vérifier que le JSON revient avec le champ `transcript`.
+- [x] Ajouter le serveur MCP d'Apify à Claude Code avec le token Apify.
+- [x] Fixer un **plafond de coût** : le serveur MCP ne permet pas de plafond par run, le garde-fou est donc le plafond mensuel du compte Apify (5 $, Settings > Usage & billing).
+- [x] Contrôle : lancer l'actor sur une seule URL, option transcript activée, et vérifier que le JSON revient avec le champ `transcript`.
 
 ## Étape 4 : Test 1, écriture Notion à blanc
 

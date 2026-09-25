@@ -77,10 +77,11 @@ Le champ « Sujet principal » prend obligatoirement une de ces valeurs. De nouv
 Accès via le serveur MCP `apify` du projet, limité à l'actor `apify/instagram-reel-scraper`.
 
 - Toujours activer l'option transcript (`includeTranscript: true`). Laisser désactivées les options de partages et de téléchargement de la vidéo.
-- Plafond de coût : **0,20 $ par run** (`maxTotalChargeUsd`). Regrouper plusieurs URL dans un même run quand c'est possible.
+- Coût : l'outil MCP ne permet pas de fixer un plafond par run. Le garde-fou est le **plafond mensuel du compte Apify (5 $)**. Ne jamais lancer l'actor sur un profil sans `resultsLimit` bas (2 ou 3). Regrouper plusieurs URL dans un même run quand c'est possible.
+- Pour lire le résultat, ne demander que les champs utiles (`fields` : shortCode, url, ownerFullName, ownerUsername, timestamp, videoDuration, caption, transcript) : jamais `latestComments` ni les autres données personnelles.
 - Vérifier le `shortCode` dans Notion **avant** de lancer l'actor : un Reel déjà en base ne doit pas coûter un run.
 
-- URL : `url`, ou reconstruite depuis `shortCode`. Ne jamais stocker `inputUrl` (paramètres de suivi).
+- URL : toujours reconstruite depuis `shortCode` au format `https://www.instagram.com/reel/<shortCode>/` (le champ `url` d'Apify renvoie parfois `/p/…`). Ne jamais stocker `inputUrl` (paramètres de suivi).
 - Auteur : `ownerFullName`, sinon `ownerUsername`.
 - Ne pas stocker `videoUrl`, `audioUrl` ni `displayUrl` (liens qui expirent), ni les likes, vues, commentaires.
 - Ne collecter que ce qui sert la base (RGPD).
