@@ -2,7 +2,7 @@
 
 Veille Instagram sur Claude Code, transformée en base de connaissances structurée dans Notion.
 
-Chaîne : URL de Reel (ajout manuel, puis comptes surveillés en phase 4) → **Apify** (`apify/instagram-reel-scraper`, option transcript activée) → **Claude Code** (analyse, classement, déduplication) → **Notion** (via MCP).
+Chaîne : URL de Reel (ajout manuel, directement ou via la boîte d'entrée Notion ; la surveillance automatique de comptes est en pause) → **Apify** (`apify/instagram-reel-scraper`, option transcript activée) → **Claude Code** (analyse, classement, déduplication) → **Notion** (via MCP).
 
 Conception complète, décisions et feuille de route : `Claude_Code_Knowledge_Base_V1.md`. La lire avant toute décision d'architecture. L'avancement suit sa section 23.
 
@@ -122,6 +122,19 @@ Data source : `3d41c46e-c16a-8022-9ec4-000b8f7e0ba2`
 | Statut | Select : `A vérifier` · `A tester` · `Validé` |
 
 Un nouvel Insight est toujours créé en `A vérifier`.
+
+### 📥 À importer (boîte d'entrée)
+
+Data source : `5ad9e40d-8ae3-42e4-92c5-17728e11694c`
+
+| Propriété | Type |
+|---|---|
+| Nom | Title |
+| URL | URL |
+| Ajouté le | Created time |
+| Note | Text (raison pour laquelle une entrée n'a pas été traitée) |
+
+Alimentée depuis le téléphone (Instagram → Partager → Notion). `/ajouter-reel` sans argument la traite puis la vide. Ce n'est qu'une file d'attente : aucune donnée de connaissance n'y est stockée.
 
 ### Sujets principaux (liste fermée)
 

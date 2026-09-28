@@ -1,7 +1,7 @@
 ---
 name: ajouter-reel
-description: Importe un ou plusieurs Reels Instagram dans la base de connaissances Notion (déduplication, Apify, analyse, classement, écriture Notion, compte rendu). À utiliser quand l'utilisateur fournit une ou plusieurs URL de Reels à ajouter.
-argument-hint: <url> [url2 url3 …]
+description: Importe un ou plusieurs Reels Instagram dans la base de connaissances Notion (déduplication, Apify, analyse, classement, écriture Notion, compte rendu). À utiliser quand l'utilisateur fournit des URL de Reels, ou sans argument pour traiter la boîte d'entrée Notion « 📥 À importer ».
+argument-hint: "[url …] (vide = boîte d'entrée Notion)"
 allowed-tools: mcp__notion, mcp__apify
 ---
 
@@ -13,11 +13,15 @@ $ARGUMENTS
 
 Les règles de décision (pertinence, sujet principal, seuils, enrichissement, Insights, champs, contraintes Notion) sont dans `CLAUDE.md` : les appliquer strictement. Les identifiants des bases y sont aussi.
 
-Si aucune URL n'est fournie, demander la ou les URL et s'arrêter.
+## 0. Source des URL
+
+- **URL fournies en argument** : traiter celles-là.
+- **Aucune URL fournie** : lire la boîte d'entrée 📥 À importer (data source `5ad9e40d-8ae3-42e4-92c5-17728e11694c`), alimentée depuis le téléphone via Partager → Notion. Pour chaque entrée, chercher un lien `instagram.com/reel/…` ou `instagram.com/p/…` dans cet ordre : propriété `URL`, titre `Nom`, puis contenu de la page (`API-retrieve-page-markdown`). Garder l'id de l'entrée pour l'étape 7.
+- Boîte d'entrée vide et aucune URL fournie : le dire et s'arrêter.
 
 ## 1. Extraire les shortCodes
 
-- Pour chaque URL : shortCode = segment après `/reel/` ou `/p/`. Ignorer tout ce qui suit (`?utm_source=…`, `stkn=…`).
+- Pour chaque URL : shortCode = segment après `/reel/` ou `/p/`. Ignorer tout ce qui suit (`?utm_source=…`, `stkn=…`, `igsh=…`).
 - Dédoublonner la liste (même Reel collé deux fois).
 - URL non reconnue (profil, story, autre site) : la signaler dans le compte rendu et ne pas la traiter.
 
@@ -66,7 +70,15 @@ Traiter les Reels **du plus ancien au plus récent** (`timestamp`).
 
 **Erreur en cours de route** : laisser le Reel en `a traiter`, continuer avec les suivants, signaler l'erreur.
 
-## 6. Compte rendu
+## 6. Vider la boîte d'entrée
+
+Uniquement pour les Reels venus de 📥 À importer :
+
+- **Traité, écarté ou déjà en base** : mettre l'entrée à la corbeille (`API-patch-page`, `in_trash: true`).
+- **Question restée sans réponse, erreur, Reel absent du résultat Apify** : garder l'entrée et écrire la raison dans sa propriété `Note`.
+- **Aucun lien Instagram trouvé** : garder l'entrée, `Note` = « Aucun lien Instagram trouvé ».
+
+## 7. Compte rendu
 
 Terminer par un tableau court :
 
@@ -80,4 +92,5 @@ Puis, en une ligne chacun :
 
 - le nombre de Reels passés dans Apify et le coût estimé (environ 0,05 à 0,10 $ par Reel avec transcript) ;
 - les anomalies (Reel absent du résultat Apify, erreur Notion, URL non reconnue) ;
-- les points que l'utilisateur pourrait vouloir vérifier dans Notion.
+- les points que l'utilisateur pourrait vouloir vérifier dans Notion ;
+- le nombre d'entrées restées dans 📥 À importer, et pourquoi.

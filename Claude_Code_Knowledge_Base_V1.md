@@ -1087,7 +1087,9 @@ Le champ **`pertinent`** permet d'ignorer ou de marquer les Reels hors sujet (Cl
 - [x] Une fois la procédure fiable, la transformer en skill : entrée = une URL, sortie = un résumé de ce qui a été créé ou enrichi dans Notion.
 - [x] Garder la skill dans le dossier du projet pour la versionner.
 
-## Étape 9 : Phase 4, surveillance automatique
+## Étape 9 : Phase 4, surveillance automatique (en pause)
+
+> **28/09/2026 : phase mise en pause.** Le coût du transcript Apify rend la surveillance de comptes incompatible avec le plan gratuit (voir section 24). À la place : ajout manuel des URL, y compris depuis le téléphone via une boîte d'entrée Notion « 📥 À importer » (Instagram → Partager → Notion), traitée par `/ajouter-reel` sans argument. Les cases ci-dessous restent valables si la phase est relancée.
 
 - [ ] Établir la liste des comptes surveillés (une dizaine).
 - [ ] Limiter chaque run aux **2 ou 3 derniers Reels** (ou aux Reels de moins de 24 h avec le filtre de date de l'actor) : le coût dépend du nombre de résultats renvoyés, pas du nombre de comptes.
