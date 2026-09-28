@@ -11,3 +11,6 @@ dataset_*.json
 # Système
 .DS_Store
 Thumbs.db
+
+# Données de l'interface, régénérées depuis Notion par /publier-insights
+interface/data.json
