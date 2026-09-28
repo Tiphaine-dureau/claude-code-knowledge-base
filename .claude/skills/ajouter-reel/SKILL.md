@@ -16,7 +16,7 @@ Les règles de décision (pertinence, sujet principal, seuils, enrichissement, I
 ## 0. Source des URL
 
 - **URL fournies en argument** : traiter celles-là.
-- **Aucune URL fournie** : lire la boîte d'entrée 📥 À importer (data source `5ad9e40d-8ae3-42e4-92c5-17728e11694c`), alimentée depuis le téléphone via Partager → Notion. Pour chaque entrée, chercher un lien `instagram.com/reel/…` ou `instagram.com/p/…` dans cet ordre : propriété `URL`, titre `Nom`, puis contenu de la page (`API-retrieve-page-markdown`). Garder l'id de l'entrée pour l'étape 7.
+- **Aucune URL fournie** : lire la boîte d'entrée 📥 À importer (data source `5ad9e40d-8ae3-42e4-92c5-17728e11694c`), alimentée depuis le téléphone via Partager → Notion. La base n'a qu'une colonne, `URL` (le titre), où l'utilisatrice colle le lien. Pour chaque entrée, chercher un lien `instagram.com/reel/…` ou `instagram.com/p/…` dans le titre, puis, s'il n'y est pas (partage mobile), dans le contenu de la page (`API-retrieve-page-markdown`). Garder l'id de l'entrée pour l'étape 6.
 - Boîte d'entrée vide et aucune URL fournie : le dire et s'arrêter.
 
 ## 1. Extraire les shortCodes
@@ -75,8 +75,7 @@ Traiter les Reels **du plus ancien au plus récent** (`timestamp`).
 Uniquement pour les Reels venus de 📥 À importer :
 
 - **Traité, écarté ou déjà en base** : mettre l'entrée à la corbeille (`API-patch-page`, `in_trash: true`).
-- **Question restée sans réponse, erreur, Reel absent du résultat Apify** : garder l'entrée et écrire la raison dans sa propriété `Note`.
-- **Aucun lien Instagram trouvé** : garder l'entrée, `Note` = « Aucun lien Instagram trouvé ».
+- **Question restée sans réponse, erreur, Reel absent du résultat Apify, aucun lien Instagram trouvé** : garder l'entrée telle quelle (ne pas modifier son titre) et donner la raison dans le compte rendu.
 
 ## 7. Compte rendu
 

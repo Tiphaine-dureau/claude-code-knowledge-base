@@ -127,14 +127,7 @@ Un nouvel Insight est toujours créé en `A vérifier`.
 
 Data source : `5ad9e40d-8ae3-42e4-92c5-17728e11694c`
 
-| Propriété | Type |
-|---|---|
-| Nom | Title |
-| URL | URL |
-| Ajouté le | Created time |
-| Note | Text (raison pour laquelle une entrée n'a pas été traitée) |
-
-Alimentée depuis le téléphone (Instagram → Partager → Notion). `/ajouter-reel` sans argument la traite puis la vide. Ce n'est qu'une file d'attente : aucune donnée de connaissance n'y est stockée.
+Une seule colonne : `URL` (Title), où l'URL du Reel est collée telle quelle. Alimentée depuis le téléphone (Instagram → Partager → Notion). `/ajouter-reel` sans argument la traite puis la vide. Ce n'est qu'une file d'attente : aucune donnée de connaissance n'y est stockée.
 
 ### Sujets principaux (liste fermée)
 
