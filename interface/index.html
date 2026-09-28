@@ -55,8 +55,18 @@ h1{font-size:20px;font-weight:700;letter-spacing:-.01em;margin:0}
 .tab[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
 .tab .n{font-weight:500;font-variant-numeric:tabular-nums;opacity:.8}
 
-.chips{display:flex;gap:8px;overflow-x:auto;padding-block:12px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.chips-wrap{position:relative;margin-inline:-16px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:12px 16px;scroll-padding-inline:16px;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
 .chips::-webkit-scrollbar{display:none}
+.chips .chip{scroll-snap-align:start}
+/* Fondu à droite : signale qu'il reste des Topics à faire défiler (masqué une fois au bout). */
+.chips-wrap::after{content:"";position:absolute;top:0;right:0;bottom:0;width:40px;pointer-events:none;background:linear-gradient(to right,transparent,var(--bg));transition:opacity .2s}
+.chips-wrap.at-end::after{opacity:0}
+@media (min-width:700px){
+  .chips-wrap{margin-inline:0}
+  .chips{flex-wrap:wrap;overflow:visible;padding-inline:0}
+  .chips-wrap::after{display:none}
+}
 .chip{flex:none;display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 13px;border-radius:17px;border:1px solid var(--line);background:var(--surface);font-size:13.5px;font-weight:500;cursor:pointer;white-space:nowrap}
 .chip .dot{width:8px;height:8px;border-radius:50%;background:hsl(var(--h,220) var(--s,10%) var(--dot-l))}
 .chip .c{color:var(--muted);font-variant-numeric:tabular-nums}
@@ -112,7 +122,7 @@ main{padding-block:4px 40px}
 </header>
 
 <main class="wrap">
-  <nav class="chips" id="chips" aria-label="Filtrer par Topic"></nav>
+  <div class="chips-wrap" id="chips-wrap"><nav class="chips" id="chips" aria-label="Filtrer par Topic"></nav></div>
   <div class="list" id="list" aria-live="polite">
     <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
   </div>
@@ -187,6 +197,14 @@ main{padding-block:4px 40px}
     $("chips").innerHTML =
       `<button class="chip" data-topic="all" aria-pressed="${topic === "all"}">Tous <span class="c">${total}</span></button>` +
       items.map(({ t, n }) => `<button class="chip" data-topic="${t.id}" style="${tint(t.name)}" aria-pressed="${topic === t.id}"><span class="dot"></span>${esc(t.name)} <span class="c">${n}</span></button>`).join("");
+    const active = $("chips").querySelector('[aria-pressed="true"]');
+    if (active && topic !== "all") active.scrollIntoView({ block: "nearest", inline: "nearest" });
+    updateFade();
+  }
+
+  function updateFade() {
+    const c = $("chips");
+    $("chips-wrap").classList.toggle("at-end", c.scrollLeft + c.clientWidth >= c.scrollWidth - 4);
   }
 
   const tags = ids => ids.map(id => topicsById[id]).filter(Boolean).map(t => `<span class="tag" style="${tint(t.name)}">${esc(t.name)}</span>`).join("");
@@ -258,6 +276,14 @@ main{padding-block:4px 40px}
     }
   });
   $("q").addEventListener("input", e => { query = e.target.value; render(); });
+  // Molette verticale → défilement horizontal des Topics (souris sur petit écran).
+  $("chips").addEventListener("wheel", e => {
+    const c = e.currentTarget;
+    if (c.scrollWidth <= c.clientWidth || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    c.scrollLeft += e.deltaY; e.preventDefault();
+  }, { passive: false });
+  $("chips").addEventListener("scroll", updateFade, { passive: true });
+  window.addEventListener("resize", updateFade);
 
   fetch("data.json", { cache: "no-store" })
     .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
