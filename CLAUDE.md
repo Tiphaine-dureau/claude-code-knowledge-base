@@ -13,15 +13,9 @@ Conception complète, décisions et feuille de route : `Claude_Code_Knowledge_Ba
 - La décision repose sur le **contenu réel** du Reel (transcript), pas sur la caption, souvent inexploitable (« commente X pour recevoir Y en DM »).
 - Avant toute insertion dans 🎬 Reels, vérifier que le `shortCode` n'y existe pas déjà (filtre sur la propriété `shortCode`). S'il existe : ne rien recréer. Ne jamais dédupliquer sur l'URL complète : ses paramètres changent à chaque partage.
 
-## Traitement d'un Reel (procédure)
+## Traitement d'un Reel
 
-1. **shortCode** : l'extraire de l'URL fournie (`/reel/<shortCode>/` ou `/p/<shortCode>/`), paramètres de suivi ignorés.
-2. **Doublon** : chercher ce `shortCode` dans 🎬 Reels. S'il existe (y compris en statut `écarté`) : s'arrêter, ne pas lancer Apify, signaler le Reel existant et son statut.
-3. **Apify** : lancer l'actor sur l'URL propre, transcript activé, lire uniquement les champs utiles.
-4. **Pertinence** : décider à partir du transcript (voir règles ci-dessous).
-5. **Analyse** : titre, résumé, sujet principal, Topics, Insights, caption utile ou non.
-6. **Écriture Notion**, dans cet ordre : Topic (création si validée) → Reel en `en cours` → Insights reliés au Reel et au Topic → enrichissement du Topic → Reel en `traité`.
-7. **Compte rendu** : lister ce qui a été créé, enrichi ou laissé de côté, avec les liens Notion.
+Procédure complète dans la skill `/ajouter-reel` (`.claude/skills/ajouter-reel/SKILL.md`) : shortCode → doublon → Apify → analyse → questions groupées → écriture Notion → compte rendu. L'utiliser pour tout import, y compris quand l'utilisateur colle simplement des URL sans taper la commande.
 
 En cas d'erreur en cours de route, laisser le Reel en `a traiter` plutôt que de perdre l'information, et le signaler.
 

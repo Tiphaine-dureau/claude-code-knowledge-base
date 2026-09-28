@@ -1084,8 +1084,8 @@ Le champ **`pertinent`** permet d'ignorer ou de marquer les Reels hors sujet (Cl
 
 ## Étape 8 : Créer la skill `/ajouter-reel`
 
-- [ ] Une fois la procédure fiable, la transformer en skill : entrée = une URL, sortie = un résumé de ce qui a été créé ou enrichi dans Notion.
-- [ ] Garder la skill dans le dossier du projet pour la versionner.
+- [x] Une fois la procédure fiable, la transformer en skill : entrée = une URL, sortie = un résumé de ce qui a été créé ou enrichi dans Notion.
+- [x] Garder la skill dans le dossier du projet pour la versionner.
 
 ## Étape 9 : Phase 4, surveillance automatique
 
