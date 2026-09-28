@@ -1089,7 +1089,12 @@ Le champ **`pertinent`** permet d'ignorer ou de marquer les Reels hors sujet (Cl
 
 ## Étape 9 : Phase 4, surveillance automatique (en pause)
 
-> **28/09/2026 : phase mise en pause.** Le coût du transcript Apify rend la surveillance de comptes incompatible avec le plan gratuit (voir section 24). À la place : ajout manuel des URL, y compris depuis le téléphone via une boîte d'entrée Notion « 📥 À importer » (Instagram → Partager → Notion), traitée par `/ajouter-reel` sans argument. Les cases ci-dessous restent valables si la phase est relancée.
+> **28/09/2026 : phase mise en pause.** Le coût du transcript Apify rend la surveillance de comptes incompatible avec le plan gratuit (voir section 24). À la place, ajout manuel des URL, depuis le téléphone ou le PC, dans l'une des deux boîtes d'entrée :
+>
+> - **Boîte d'entrée Notion « 📥 À importer »** : une base à une seule colonne (`URL`) dans la page « Claude Code Knowledge Base », où l'on colle le lien depuis l'application Notion.
+> - **Boîte d'entrée de la page web** (artefact « Veille Claude Code ») : bouton « + Ajouter », visible uniquement par la propriétaire et les éditeurs, qui enregistre les liens dans la base de données de l'artefact (collection `inbox`, un document par shortCode, lecture et écriture réservées aux éditeurs).
+>
+> `/ajouter-reel` sans argument lit les deux boîtes, fusionne les doublons, traite tout en un seul run Apify, puis les vide. Les deux coexistent pour l'instant ; l'une pourra être supprimée à l'usage. Les cases ci-dessous restent valables si la phase est relancée.
 
 - [ ] Établir la liste des comptes surveillés (une dizaine).
 - [ ] Limiter chaque run aux **2 ou 3 derniers Reels** (ou aux Reels de moins de 24 h avec le filtre de date de l'actor) : le coût dépend du nombre de résultats renvoyés, pas du nombre de comptes.
