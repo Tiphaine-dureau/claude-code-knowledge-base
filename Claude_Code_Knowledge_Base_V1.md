@@ -1126,3 +1126,14 @@ Vérifier, sur des Reels réels, la consommation de l'abonnement pour un traitem
 ## Partage des runs Apify
 
 Décider d'accepter ou non le partage des runs de l'actor avec son développeur.
+
+## Lancer le traitement sans être devant le PC
+
+Aujourd'hui, les URL s'ajoutent depuis le téléphone dans la boîte d'entrée Notion « 📥 À importer », mais `/ajouter-reel` se lance depuis le PC. Deux pistes, sans coût supplémentaire (incluses dans l'abonnement, l'usage compte dans les limites habituelles) :
+
+| Piste | Principe | Compromis |
+|---|---|---|
+| **Remote Control** | Piloter depuis l'application Claude du téléphone une session qui tourne sur le PC | Aucune configuration, mais le PC doit rester allumé avec une session ouverte. Peu utile tant que le PC est éteint en journée |
+| **Session cloud / Routine** | Session Claude Code sur les serveurs d'Anthropic, lancée depuis le téléphone ou à heure fixe (Routine, par exemple chaque soir) : fonctionne PC éteint | À configurer : jetons Notion et Apify dans l'environnement cloud (de préférence en « API credentials »), domaines `api.notion.com` et `api.apify.com` à autoriser, serveurs MCP de `.mcp.json` à tester. Une Routine tourne sans utilisateur : les Reels incertains doivent rester dans la boîte d'entrée jusqu'à la session suivante |
+
+Test conseillé avant de choisir le cloud : configurer l'environnement puis lancer `/ajouter-reel` sur un Reel déjà en base (vérifie Notion sans dépense Apify).
