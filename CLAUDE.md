@@ -171,6 +171,7 @@ Accès via le serveur MCP `apify` du projet, limité à l'actor `apify/instagram
 ## Git
 
 - Commits au seul nom de l'utilisatrice : **ne jamais ajouter de ligne `Co-Authored-By`** (ni aucune autre mention de Claude) dans les messages de commit ou de pull request.
+- Messages de commit **en anglais**, courts, à l'impératif (ex. « Add web inbox to the interface »).
 - Ne commiter et pousser qu'après validation de l'utilisatrice quand elle a demandé à voir les modifications.
 
 ## Secrets
