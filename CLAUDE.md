@@ -168,6 +168,11 @@ Accès via le serveur MCP `apify` du projet, limité à l'actor `apify/instagram
 - Ne pas stocker `videoUrl`, `audioUrl` ni `displayUrl` (liens qui expirent), ni les likes, vues, commentaires.
 - Ne collecter que ce qui sert la base (RGPD).
 
+## Git
+
+- Commits au seul nom de l'utilisatrice : **ne jamais ajouter de ligne `Co-Authored-By`** (ni aucune autre mention de Claude) dans les messages de commit ou de pull request.
+- Ne commiter et pousser qu'après validation de l'utilisatrice quand elle a demandé à voir les modifications.
+
 ## Secrets
 
 Aucun token (Apify, Notion…) dans ce dépôt, ni dans ce fichier, ni dans la doc. Les secrets restent dans la configuration locale des serveurs MCP ou dans un `.env` (ignoré par git).
