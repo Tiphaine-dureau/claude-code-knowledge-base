@@ -128,7 +128,7 @@ Un nouvel Insight est toujours créé en `A vérifier`.
 
 Data source : `5ad9e40d-8ae3-42e4-92c5-17728e11694c`
 
-Une seule colonne : `URL` (Title), où l'URL du Reel est collée telle quelle. Alimentée depuis le téléphone (Instagram → Partager → Notion). `/ajouter-reel` sans argument la traite puis la vide. Ce n'est qu'une file d'attente : aucune donnée de connaissance n'y est stockée.
+Une seule colonne : `URL` (Title), où l'URL du Reel est collée telle quelle. Alimentée depuis le téléphone (Instagram → Partager → Notion). `/ajouter-reel` sans argument la traite puis la vide, avec la file de l'interface web (voir « Interface web »). Les deux coexistent pour l'instant ; l'une pourra être supprimée à l'usage. Ce n'est qu'une file d'attente : aucune donnée de connaissance n'y est stockée.
 
 ### Sujets principaux (liste fermée)
 
@@ -144,6 +144,8 @@ Page « Veille Claude Code » : https://claude.ai/artifact/NphDoxdMUmRvSspUdtrfx
 - `interface/data.json` : les données, régénérées depuis Notion par `/publier-insights` (ignorées par git).
 - Ne contient que des Reels `traité` et leurs résumés : jamais de transcript, de caption, de Reel écarté ni de lien Notion.
 - `/ajouter-reel` republie la page à la fin de chaque import qui change quelque chose.
+- **File d'attente web** : un bouton « Ajouter », visible seulement par la propriétaire et les éditeurs, enregistre des liens dans la base de données de l'artefact (collection `inbox`, un document par shortCode). Droits : lecture de la page pour tous, `inbox` lisible et modifiable par `admin` seulement. `/ajouter-reel` sans argument la lit avec la boîte 📥 À importer, puis la vide. Conséquence : la page ne peut plus être partagée par lien public, seulement par invitation.
+- Republier la page sans passer `capabilities` (elles sont conservées) ; passer `{}` les supprimerait et casserait la file.
 
 ## Données Apify
 

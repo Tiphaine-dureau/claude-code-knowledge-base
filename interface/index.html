@@ -100,6 +100,29 @@ main{padding-block:4px 40px}
 .link:hover{text-decoration:underline}
 .mini{margin:0;padding-left:18px;display:grid;gap:6px;font-family:var(--font-read);font-size:15.5px;line-height:1.4}
 
+/* Ajout de Reels (éditeurs uniquement) : bouton flottant + feuille du bas, façon Material. */
+.fab{position:fixed;right:16px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:6;display:inline-flex;align-items:center;gap:8px;height:52px;padding:0 20px 0 16px;border:0;border-radius:16px;background:var(--accent);color:var(--bg);font-weight:600;font-size:15px;box-shadow:0 4px 14px hsl(222 40% 20% / .22);cursor:pointer}
+.fab .badge{min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:var(--bg);color:var(--accent);font-size:12.5px;font-weight:700;display:inline-grid;place-items:center;font-variant-numeric:tabular-nums}
+.scrim{position:fixed;inset:0;z-index:7;background:hsl(222 30% 8% / .45)}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:8;max-height:88vh;overflow-y:auto;background:var(--surface);border-radius:20px 20px 0 0;box-shadow:0 -4px 24px hsl(222 40% 10% / .2);padding:10px 16px calc(20px + env(safe-area-inset-bottom,0px))}
+@media (min-width:700px){.sheet{left:50%;right:auto;width:560px;transform:translateX(-50%)}}
+.grip{width:36px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 12px}
+.sheet h2{font-size:17px;margin:0 0 4px}
+.hint{color:var(--muted);font-size:13.5px;margin:0 0 12px}
+.sheet textarea{width:100%;min-height:110px;resize:vertical;border:1px solid var(--line);border-radius:12px;background:var(--surface-2);color:var(--fg);padding:12px;font:inherit;font-size:14px;line-height:1.45}
+.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
+.btn{height:40px;padding:0 18px;border-radius:20px;border:1px solid var(--line);background:none;font-weight:600;cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.btn:disabled{opacity:.5;cursor:default}
+.msg{font-size:13.5px;margin:10px 0 0;min-height:1.2em}
+.queue{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.queue li{display:flex;align-items:center;gap:10px;background:var(--surface-2);border-radius:10px;padding:8px 8px 8px 12px;font-size:13.5px}
+.queue code{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;font-family:ui-monospace,Consolas,monospace;font-size:13px}
+.queue .when{color:var(--muted);font-size:12px;white-space:nowrap}
+.icon-btn{width:32px;height:32px;border-radius:16px;border:0;background:none;color:var(--muted);cursor:pointer;display:grid;place-items:center}
+.icon-btn:hover{background:var(--line)}
+body.has-fab main{padding-bottom:96px}
+
 .empty{text-align:center;color:var(--muted);padding:48px 16px}
 .skeleton{height:132px;border-radius:var(--r);background:var(--surface);box-shadow:var(--shadow);opacity:.6}
 @media (prefers-reduced-motion:reduce){.chev{transition:none}}
@@ -128,6 +151,25 @@ main{padding-block:4px 40px}
     <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
   </div>
 </main>
+
+<button class="fab" id="fab" hidden aria-haspopup="dialog">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+  Ajouter <span class="badge" id="fab-badge" hidden></span>
+</button>
+<div class="scrim" id="scrim" hidden></div>
+<section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" hidden>
+  <div class="grip"></div>
+  <h2 id="sheet-title">Ajouter des Reels</h2>
+  <p class="hint">Colle un ou plusieurs liens Instagram (un par ligne ou à la suite). Ils seront traités au prochain <code>/ajouter-reel</code> sur le PC.</p>
+  <textarea id="links" placeholder="https://www.instagram.com/reel/…" aria-label="Liens Instagram"></textarea>
+  <p class="msg" id="add-msg" role="status"></p>
+  <div class="actions">
+    <button class="btn" id="close-sheet">Fermer</button>
+    <button class="btn primary" id="add-links">Ajouter à la file</button>
+  </div>
+  <p class="label" id="queue-label" hidden>En attente de traitement</p>
+  <ul class="queue" id="queue"></ul>
+</section>
 
 <script>
 (() => {
@@ -285,6 +327,65 @@ main{padding-block:4px 40px}
   }, { passive: false });
   $("chips").addEventListener("scroll", updateFade, { passive: true });
   window.addEventListener("resize", updateFade);
+
+  // ── File d'attente des Reels (base de données de l'artefact, réservée aux éditeurs) ──
+  // Chaque lien devient un document inbox/<shortCode> : un même Reel collé deux fois n'est stocké qu'une fois.
+  const REEL_RE = /instagram\.com\/(?:reels?|p)\/([A-Za-z0-9_-]{5,})/g;
+  let inbox = null, queue = [];
+  const openSheet = open => {
+    $("sheet").hidden = $("scrim").hidden = !open;
+    if (open) { $("add-msg").textContent = ""; $("links").focus(); }
+    else $("fab").focus();
+  };
+  function renderQueue() {
+    const b = $("fab-badge");
+    b.hidden = queue.length === 0; b.textContent = queue.length;
+    $("queue-label").hidden = queue.length === 0;
+    $("queue").innerHTML = queue.map(q => `<li><code>${esc(q.shortCode)}</code><span class="when">${q.addedAt ? fmt(q.addedAt.slice(0, 10)) : ""}</span>
+      <button class="icon-btn" data-remove="${esc(q.shortCode)}" aria-label="Retirer ${esc(q.shortCode)} de la file"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></li>`).join("");
+  }
+  async function addLinks() {
+    const text = $("links").value;
+    const codes = [...new Set([...text.matchAll(REEL_RE)].map(m => m[1]))];
+    const msg = $("add-msg");
+    if (!codes.length) { msg.textContent = "Aucun lien de Reel Instagram reconnu."; return; }
+    const known = new Set(queue.map(q => q.shortCode));
+    const fresh = codes.filter(c => !known.has(c));
+    $("add-links").disabled = true;
+    try {
+      for (const c of fresh) {
+        await inbox.doc(c).set({ shortCode: c, url: `https://www.instagram.com/reel/${c}/`, addedAt: new Date().toISOString() });
+      }
+      $("links").value = "";
+      const dup = codes.length - fresh.length;
+      msg.textContent = (fresh.length ? `${fresh.length} Reel${fresh.length > 1 ? "s" : ""} ajouté${fresh.length > 1 ? "s" : ""} à la file.` : "")
+        + (dup ? ` ${dup} déjà en attente.` : "");
+    } catch (e) {
+      msg.textContent = e && e.code === "quota_exceeded"
+        ? "La file est pleine : lance /ajouter-reel pour la vider."
+        : "L'ajout a échoué. Vérifie ta connexion et réessaie.";
+    } finally { $("add-links").disabled = false; }
+  }
+  (async () => {
+    if (!window.claude || !window.claude.use) return;
+    const user = await window.claude.use("user");
+    if (!user || !(await user.canEdit())) return;
+    const db = await window.claude.use("db");
+    if (!db) return;
+    inbox = db.collection("inbox");
+    $("fab").hidden = false; document.body.classList.add("has-fab");
+    inbox.orderBy("addedAt").onSnapshot(snap => { queue = snap.docs.map(d => d.data()); renderQueue(); },
+      () => { $("fab").hidden = true; document.body.classList.remove("has-fab"); openSheet(false); });
+    $("fab").addEventListener("click", () => openSheet(true));
+    $("scrim").addEventListener("click", () => openSheet(false));
+    $("close-sheet").addEventListener("click", () => openSheet(false));
+    $("add-links").addEventListener("click", addLinks);
+    $("sheet").addEventListener("keydown", e => { if (e.key === "Escape") openSheet(false); });
+    $("queue").addEventListener("click", e => {
+      const b = e.target.closest("[data-remove]");
+      if (b) inbox.doc(b.dataset.remove).delete().catch(() => { $("add-msg").textContent = "Impossible de retirer ce lien pour l'instant."; });
+    });
+  })();
 
   fetch("data.json", { cache: "no-store" })
     .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
