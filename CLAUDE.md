@@ -55,6 +55,7 @@ En cas d'erreur en cours de route, laisser le Reel en `a traiter` plutôt que de
 - 1 à 3 par Reel. Chacun est une phrase autonome, compréhensible sans voir la vidéo, qui dit ce qu'on apprend ou ce qu'on peut faire.
 - Pas d'Insight pour une promesse vide (« je t'envoie la skill en DM ») ou une information générique.
 - Avant d'en créer un, lire les Insights du Topic : si la même idée existe déjà, **ajouter le Reel à sa `Source`** au lieu de créer un doublon (c'est ce qui fera apparaître les convergences entre créateurs).
+- **Après chaque ajout de source, relire le titre de l'Insight** : il doit rester vrai pour **toutes** ses sources. S'il cite un outil, un exemple ou un détail propre à une seule source (ex. « Obsidian » alors qu'une autre source utilise autre chose), le reformuler autour de l'idée commune. Garder un nom d'outil seulement si toutes les sources en parlent. Ne reformuler qu'un Insight en `A vérifier` ; pour un Insight `A tester` ou `Validé`, proposer la nouvelle formulation et demander.
 - Statut : toujours `A vérifier` à la création.
 
 ### Champs du Reel

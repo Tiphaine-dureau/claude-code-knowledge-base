@@ -62,7 +62,7 @@ Traiter les Reels **du plus ancien au plus récent** (`timestamp`).
 
 1. Nouveau sujet validé : ajouter l'option au Select `Sujet principal` (`API-update-a-data-source`, en renvoyant toutes les options existantes avec leur `id`), créer le Topic depuis le modèle (`API-post-page` avec `template: {type: "template_id", template_id: <id du modèle>}` ; l'id s'obtient avec `API-list-data-source-templates`), puis ajouter le sujet à la liste fermée de `CLAUDE.md`.
 2. Créer le Reel en statut `en cours` avec toutes ses propriétés (URL reconstruite, transcript découpé si plus de 2000 caractères).
-3. Insights : créer les nouveaux (`A vérifier`, relations `Topics` + `Source`) ; pour une idée déjà présente, ajouter ce Reel à la `Source` existante (renvoyer la liste complète des sources).
+3. Insights : créer les nouveaux (`A vérifier`, relations `Topics` + `Source`) ; pour une idée déjà présente, ajouter ce Reel à la `Source` existante (renvoyer la liste complète des sources), puis vérifier que le titre de l'Insight reste vrai pour toutes ses sources et le reformuler sinon (règle dans `CLAUDE.md`).
 4. Enrichir le Topic avec `API-update-page-markdown` en `update_content` (remplacements ciblés, jamais `replace_content`) : remplacer une phrase d'aide du modèle ou ajouter une puce sourcée (auteur, mois). Relire la page après écriture pour vérifier qu'aucun nom de fichier n'a été transformé en lien.
 5. Passer le Reel en `traité`.
 
