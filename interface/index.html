@@ -62,7 +62,8 @@ h1{font-size:20px;font-weight:700;letter-spacing:-.01em;margin:0}
 /* Fondu à droite : signale qu'il reste des Topics à faire défiler (masqué une fois au bout). */
 .chips-wrap::after{content:"";position:absolute;top:0;right:0;bottom:0;width:40px;pointer-events:none;background:linear-gradient(to right,transparent,var(--bg));transition:opacity .2s}
 .chips-wrap.at-end::after{opacity:0}
-@media (min-width:700px){
+/* Retour à la ligne sur grand écran, et à toute largeur dès qu'il y a une souris (pas de glisser au doigt). */
+@media (min-width:700px),(hover:hover) and (pointer:fine){
   .chips-wrap{margin-inline:0}
   .chips{flex-wrap:wrap;overflow:visible;padding-inline:0}
   .chips-wrap::after{display:none}
