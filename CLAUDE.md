@@ -140,7 +140,14 @@ Le champ « Sujet principal » prend obligatoirement une de ces valeurs. De nouv
 
 Page « Veille Claude Code » : https://claude.ai/artifact/NphDoxdMUmRvSspUdtrfxK (artefact privé tant qu'il n'est pas partagé depuis claude.ai).
 
-- `interface/index.html` : la page (versionnée). Mobile d'abord, cartes et accordéons, pas de tableau.
+- Code (versionné), mobile d'abord, cartes et accordéons, pas de tableau :
+  - `interface/index.html` : structure seule ;
+  - `interface/styles.css` : styles (CSS natif, thème clair et sombre par variables) ;
+  - `interface/js/lib.js` : logique pure (préparation des données, tri, filtres, extraction des liens), sans DOM ;
+  - `interface/js/app.js` : affichage et interactions ; `interface/js/inbox.js` : bouton « Ajouter » et file d'attente.
+  - JavaScript en modules ES, typé en JSDoc avec `// @ts-check` (pas de build). Pas de TypeScript ni de SCSS : aucune étape de compilation à maintenir.
+- Tests : `cd interface && npm test` (lanceur intégré de Node, aucune dépendance), sur `js/lib.js`. Toute nouvelle logique va dans `lib.js` avec son test.
+- Aperçu local : serveur `interface` de `.claude/launch.json` (http://localhost:5173) ; le bouton « Ajouter » n'y apparaît pas (il n'existe que sur claude.ai).
 - `interface/data.json` : les données, régénérées depuis Notion par `/publier-insights` (ignorées par git).
 - Ne contient que des Reels `traité` et leurs résumés : jamais de transcript, de caption, de Reel écarté ni de lien Notion.
 - `/ajouter-reel` republie la page à la fin de chaque import qui change quelque chose.

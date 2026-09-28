@@ -1,0 +1,13 @@
+{
+  "name": "veille-claude-code-interface",
+  "private": true,
+  "type": "module",
+  "description": "Interface web (artefact claude.ai) de la base de connaissances Claude Code.",
+  "scripts": {
+    "test": "node --test",
+    "serve": "npx --yes http-server . -p 5173 -c-1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

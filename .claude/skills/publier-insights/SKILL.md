@@ -8,7 +8,7 @@ allowed-tools: mcp__notion, Artifact, Write, Read
 
 Met à jour la page https://claude.ai/artifact/NphDoxdMUmRvSspUdtrfxK à partir de Notion.
 
-- Page : `interface/index.html` (versionnée, ne pas la modifier ici).
+- Page : `interface/index.html`, `interface/styles.css`, `interface/js/*.js` (versionnés, ne pas les modifier ici).
 - Données : `interface/data.json` (régénérée à chaque fois, ignorée par git).
 
 ## 1. Lire Notion
@@ -55,7 +55,7 @@ Règles :
 2. `Artifact` (publish) avec :
    - `url` : `https://claude.ai/artifact/NphDoxdMUmRvSspUdtrfxK` ;
    - `file_path` : `interface/index.html` ;
-   - `files` : `{"data.json": "interface/data.json"}` ;
+   - `files` : `{"data.json": "interface/data.json", "styles.css": "interface/styles.css", "js/app.js": "interface/js/app.js", "js/lib.js": "interface/js/lib.js", "js/inbox.js": "interface/js/inbox.js"}` ;
    - sans `icon` ni `capabilities` (ils sont conservés).
 
 Si la publication est refusée pour conflit (une version plus récente existe), relire l'artefact, vérifier que seule la page a changé, puis republier. Ne jamais utiliser `force`.
