@@ -135,6 +135,15 @@ Skills · Agents · Subagents · MCP · CLAUDE.md · Context Engineering · Hook
 
 Le champ « Sujet principal » prend obligatoirement une de ces valeurs. De nouveaux Topics peuvent apparaître, mais seulement pour des sujets réellement distincts.
 
+## Interface web
+
+Page « Veille Claude Code » : https://claude.ai/artifact/NphDoxdMUmRvSspUdtrfxK (artefact privé tant qu'il n'est pas partagé depuis claude.ai).
+
+- `interface/index.html` : la page (versionnée). Mobile d'abord, cartes et accordéons, pas de tableau.
+- `interface/data.json` : les données, régénérées depuis Notion par `/publier-insights` (ignorées par git).
+- Ne contient que des Reels `traité` et leurs résumés : jamais de transcript, de caption, de Reel écarté ni de lien Notion.
+- `/ajouter-reel` republie la page à la fin de chaque import qui change quelque chose.
+
 ## Données Apify
 
 Accès via le serveur MCP `apify` du projet, limité à l'actor `apify/instagram-reel-scraper`.

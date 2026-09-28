@@ -77,7 +77,11 @@ Uniquement pour les Reels venus de 📥 À importer :
 - **Traité, écarté ou déjà en base** : mettre l'entrée à la corbeille (`API-patch-page`, `in_trash: true`).
 - **Question restée sans réponse, erreur, Reel absent du résultat Apify, aucun lien Instagram trouvé** : garder l'entrée telle quelle (ne pas modifier son titre) et donner la raison dans le compte rendu.
 
-## 7. Compte rendu
+## 7. Mettre à jour l'interface web
+
+Si au moins un Reel a été traité (créé, ou ajouté comme source d'un Insight existant), suivre la procédure de `/publier-insights` (`.claude/skills/publier-insights/SKILL.md`) pour republier la page. Ne pas le faire si rien n'a changé (uniquement des doublons, des écartés ou des erreurs).
+
+## 8. Compte rendu
 
 Terminer par un tableau court :
 
@@ -92,4 +96,5 @@ Puis, en une ligne chacun :
 - le nombre de Reels passés dans Apify et le coût estimé (environ 0,05 à 0,10 $ par Reel avec transcript) ;
 - les anomalies (Reel absent du résultat Apify, erreur Notion, URL non reconnue) ;
 - les points que l'utilisateur pourrait vouloir vérifier dans Notion ;
-- le nombre d'entrées restées dans 📥 À importer, et pourquoi.
+- le nombre d'entrées restées dans 📥 À importer, et pourquoi ;
+- si l'interface web a été republiée, avec son lien.
