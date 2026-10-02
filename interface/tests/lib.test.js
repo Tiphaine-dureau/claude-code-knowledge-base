@@ -13,9 +13,9 @@ const fixture = () => ({
     { id: "tMcp", name: "MCP" },
   ],
   reels: {
-    rA: { title: "Reel A", author: "Alice", date: "2026-08-01", url: "https://www.instagram.com/reel/AAAAA/", summary: "Superpowers et mémoire" },
-    rB: { title: "Reel B", author: "Bob", date: "2026-09-01", url: "https://www.instagram.com/reel/BBBBB/", summary: "Playwright pilote un navigateur" },
-    rC: { title: "Reel C", author: "Alice", date: "2026-07-01", url: "https://www.instagram.com/reel/CCCCC/", summary: "Encore Superpowers" },
+    rA: { title: "Reel A", author: "Alice", date: "2026-08-01", url: "https://www.instagram.com/reel/AAAAA/", summary: "Superpowers et mémoire", imported: "2026-09-20" },
+    rB: { title: "Reel B", author: "Bob", date: "2026-09-01", url: "https://www.instagram.com/reel/BBBBB/", summary: "Playwright pilote un navigateur", imported: "2026-09-28" },
+    rC: { title: "Reel C", author: "Alice", date: "2026-07-01", url: "https://www.instagram.com/reel/CCCCC/", summary: "Encore Superpowers", imported: "2026-09-20" },
   },
   insights: [
     { id: "i1", text: "Une seule source", topics: ["tSkills"], sources: ["rC"] },
@@ -96,4 +96,27 @@ test("filterItems : par Topic, par recherche sans accents, et combinés", () => 
   assert.deepEqual(ids(filterItems(insights, { topic: "all", query: "  MÉMOIRE " })), ["i2", "i3"]);
   assert.deepEqual(ids(filterItems(insights, { topic: "tMcp", query: "memoire" })), ["i2"]);
   assert.deepEqual(ids(filterItems(insights, { topic: "all", query: "introuvable" })), []);
+});
+
+test("prepareData : nouveaux = Reels du dernier import et Insights qui en ont une source", () => {
+  const data = prepareData(fixture());
+  assert.equal(data.lastImport, "2026-09-28");
+  assert.deepEqual(data.reels.filter((r) => r.isNew).map((r) => r.id), ["rB"]);
+  assert.deepEqual(data.insights.filter((i) => i.isNew).map((i) => i.id), ["i2"]);
+});
+
+test("prepareData : un nouvel import retire le marqueur des précédents", () => {
+  const raw = fixture();
+  raw.reels.rC.imported = "2026-10-02";
+  const data = prepareData(raw);
+  assert.deepEqual(data.reels.filter((r) => r.isNew).map((r) => r.id), ["rC"]);
+  assert.deepEqual(data.insights.filter((i) => i.isNew).map((i) => i.id).sort(), ["i1", "i3"]);
+});
+
+test("prepareData : sans date d'import, rien n'est marqué nouveau", () => {
+  const raw = fixture();
+  for (const r of Object.values(raw.reels)) delete r.imported;
+  const data = prepareData(raw);
+  assert.equal(data.lastImport, "");
+  assert.ok(data.reels.every((r) => !r.isNew) && data.insights.every((i) => !i.isNew));
 });

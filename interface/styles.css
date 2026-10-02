@@ -275,6 +275,16 @@ main { padding-block: 4px 40px; }
 
 .skeleton { height: 132px; opacity: .6; }
 
+/* Nouveauté (dernier import) : bordure accent, sans décaler la mise en page. */
+.card.is-new { box-shadow: 0 0 0 1.5px var(--accent), var(--shadow); }
+
+/* Carte atteinte par « Lire le Reel » : bref halo pour la repérer. */
+.card.flash { animation: flash 1.4s ease-out; }
+
+@keyframes flash {
+  from { box-shadow: 0 0 0 6px var(--accent-soft), 0 0 0 1.5px var(--accent); }
+}
+
 .toggle {
   display: block;
   width: 100%;
@@ -313,6 +323,25 @@ main { padding-block: 4px 40px; }
 }
 
 .conv { color: var(--accent); background: var(--accent-soft); }
+
+/* Badge New : plein, pour se distinguer des étiquettes de Topic. */
+.new {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 7px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: var(--bg);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  vertical-align: 2px;
+}
+
+.src .new { margin-right: 6px; }
 
 .insight {
   margin: 0;
@@ -380,6 +409,8 @@ main { padding-block: 4px 40px; }
   background: var(--surface-2);
 }
 
+.src.is-new { box-shadow: inset 0 0 0 1px var(--accent); }
+
 .src h3 {
   margin: 0;
   font-size: 14.5px;
@@ -405,6 +436,15 @@ main { padding-block: 4px 40px; }
   font-size: 13.5px;
   font-weight: 600;
   text-decoration: none;
+}
+
+/* « Lire le Reel » est un bouton (navigation interne) habillé comme un lien. */
+button.link {
+  border: 0;
+  padding-inline: 0;
+  background: none;
+  color: var(--accent);
+  cursor: pointer;
 }
 
 .link:hover { text-decoration: underline; }
@@ -601,4 +641,5 @@ main { padding-block: 4px 40px; }
 @media (prefers-reduced-motion: reduce) {
   .chev,
   .chips-wrap::after { transition: none; }
+  .card.flash { animation: none; }
 }

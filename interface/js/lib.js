@@ -5,13 +5,13 @@
 
 /**
  * @typedef {{ id: string, name: string }} Topic
- * @typedef {{ title: string, author: string, date: string, url: string, summary: string }} RawReel
+ * @typedef {{ title: string, author: string, date: string, url: string, summary: string, imported?: string }} RawReel
  * @typedef {{ id: string, text: string, topics: string[], sources: string[] }} RawInsight
  * @typedef {{ updated: string, topics: Topic[], reels: Record<string, RawReel>, insights: RawInsight[] }} RawData
  *
- * @typedef {RawReel & { id: string, topics: string[], insights: Insight[], hay: string }} Reel
- * @typedef {RawInsight & { reels: Reel[], authors: string[], hay: string }} Insight
- * @typedef {{ updated: string, topics: Topic[], topicsById: Map<string, Topic>, insights: Insight[], reels: Reel[] }} ViewData
+ * @typedef {RawReel & { id: string, topics: string[], insights: Insight[], hay: string, isNew: boolean }} Reel
+ * @typedef {RawInsight & { reels: Reel[], authors: string[], hay: string, isNew: boolean }} Insight
+ * @typedef {{ updated: string, lastImport: string, topics: Topic[], topicsById: Map<string, Topic>, insights: Insight[], reels: Reel[] }} ViewData
  */
 
 /** Teinte et saturation par Topic : nuances sobres pour repérer les thèmes d'un coup d'œil. */
@@ -24,6 +24,7 @@ export const TOPIC_HUES = /** @type {Record<string, [number, number]>} */ ({
   "context engineering": [162, 34],
   "hooks": [338, 36],
   "workflows & automatisations": [96, 30],
+  "commandes": [300, 30],
 });
 
 /**
@@ -78,17 +79,26 @@ export function extractShortCodes(text) {
  * Relie Insights, Reels et Topics, calcule les champs dérivés et trie :
  * Insights par convergence (créateurs distincts, puis sources, puis récence), Reels du plus récent au plus ancien.
  * Les sources et Topics inconnus sont ignorés.
+ * « Nouveau » = Reel du dernier import (date d'import la plus récente), et Insight qui a au moins une telle source.
  * @param {RawData} raw
  * @returns {ViewData}
  */
 export function prepareData(raw) {
   const topicsById = new Map(raw.topics.map((t) => [t.id, t]));
+  const lastImport = Object.values(raw.reels).reduce((max, r) => (r.imported && r.imported > max ? r.imported : max), "");
 
   /** @type {Map<string, Reel>} */
   const reelsById = new Map(
     Object.entries(raw.reels).map(([id, r]) => [
       id,
-      { ...r, id, topics: [], insights: [], hay: normalize(`${r.title} ${r.author} ${r.summary}`) },
+      {
+        ...r,
+        id,
+        topics: [],
+        insights: [],
+        hay: normalize(`${r.title} ${r.author} ${r.summary}`),
+        isNew: lastImport !== "" && r.imported === lastImport,
+      },
     ]),
   );
 
@@ -100,6 +110,7 @@ export function prepareData(raw) {
       reels,
       authors: [...new Set(reels.map((r) => r.author))],
       hay: normalize([i.text, ...reels.map((r) => r.hay)].join(" ")),
+      isNew: reels.some((r) => r.isNew),
     };
   });
 
@@ -117,6 +128,7 @@ export function prepareData(raw) {
 
   return {
     updated: raw.updated,
+    lastImport,
     topics: raw.topics,
     topicsById,
     insights,

@@ -151,6 +151,8 @@ Page « Veille Claude Code » : https://claude.ai/artifact/NphDoxdMUmRvSspUdtrfx
 - `interface/data.json` : les données, régénérées depuis Notion par `/publier-insights` (ignorées par git).
 - Ne contient que des Reels `traité` et leurs résumés : jamais de transcript, de caption, de Reel écarté ni de lien Notion.
 - `/ajouter-reel` republie la page à la fin de chaque import qui change quelque chose.
+- **Nouveautés** : les Reels du dernier import (`Date import` la plus récente) et les Insights qui en ont une source portent un badge « New » et une bordure, jusqu'à l'import suivant. Pas d'onglet dédié.
+- Dans un Insight, « Lire le Reel » ouvre la carte du Reel dans l'onglet Reels ; seule la carte du Reel renvoie vers Instagram (« Voir sur Instagram »).
 - **File d'attente web** : un bouton « Ajouter », visible seulement par la propriétaire et les éditeurs, enregistre des liens dans la base de données de l'artefact (collection `inbox`, un document par shortCode). Droits : lecture de la page pour tous, `inbox` lisible et modifiable par `admin` seulement. `/ajouter-reel` sans argument la lit avec la boîte 📥 À importer, puis la vide. La page est partagée par lien (« Tous ceux qui ont le lien peuvent voir ») : tout visiteur voit les Insights et les résumés, mais ni le bouton ni la file.
 - Republier la page sans passer `capabilities` (elles sont conservées) ; passer `{}` les supprimerait et casserait la file.
 

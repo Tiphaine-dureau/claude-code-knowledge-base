@@ -17,7 +17,7 @@ Trois requêtes `API-query-data-source` (identifiants dans `CLAUDE.md`) :
 
 - 🗂️ **Topics** : toutes les pages (ignorer le modèle « Template » s'il apparaît).
 - 💡 **Insights** : toutes les pages.
-- 🎬 **Reels** : filtre `Statut` = `traité` uniquement. Jamais les Reels `écarté`, `a traiter` ou `en cours`. Limiter les propriétés avec `filter_properties` (titre, URL, Auteur, Date, Résumé) : ne jamais lire ni publier le Transcript ou la Caption.
+- 🎬 **Reels** : filtre `Statut` = `traité` uniquement. Jamais les Reels `écarté`, `a traiter` ou `en cours`. Limiter les propriétés avec `filter_properties` (titre, URL, Auteur, Date, Résumé, Date import) : ne jamais lire ni publier le Transcript ou la Caption.
 
 Paginer avec `start_cursor` tant que `has_more` est vrai.
 
@@ -32,7 +32,7 @@ Pour les textes, concaténer les `plain_text` de tous les éléments puis suppri
   "updated": "AAAA-MM-JJ (date du jour)",
   "topics": [{"id": "…", "name": "nom exact du Topic"}],
   "reels": {
-    "<id court>": {"title": "…", "author": "…", "date": "AAAA-MM-JJ", "url": "https://www.instagram.com/reel/<shortCode>/", "summary": "…"}
+    "<id court>": {"title": "…", "author": "…", "date": "AAAA-MM-JJ", "url": "https://www.instagram.com/reel/<shortCode>/", "summary": "…", "imported": "AAAA-MM-JJ (Date import)"}
   },
   "insights": [
     {"id": "…", "text": "…", "topics": ["<id court Topic>"], "sources": ["<id court Reel>"]}
@@ -45,6 +45,7 @@ Règles :
 - `topics` : trier par nombre d'Insights décroissant (la page masque ceux qui n'en ont aucun).
 - `insights[].sources` : ne garder que les Reels présents dans `reels` (donc traités). Un Insight sans aucune source restante est omis.
 - `insights[].topics` : ne garder que les Topics présents dans `topics`.
+- `reels[].imported` : la `Date import` du Reel. La page marque « New » (badge + bordure) les Reels de la date d'import la plus récente et les Insights qui en ont une source ; le marqueur passe aux suivants au prochain import.
 - Ne rien ajouter d'autre (pas de statut, pas de transcript, pas de caption, pas de lien Notion) : la page peut être partagée.
 
 Écrire le fichier avec `Write` (JSON valide, UTF-8).

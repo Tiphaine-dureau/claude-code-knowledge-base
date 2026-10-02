@@ -11,6 +11,7 @@ import { initInbox } from "./inbox.js";
 const $ = (id) => /** @type {HTMLElement} */ (document.getElementById(id));
 
 const ICON_CHEVRON = '<svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
+const ICON_ARROW = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 const ICON_EXTERNAL = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>';
 
 /** Préférences mémorisées sur l'appareil (le navigateur peut refuser le stockage). */
@@ -46,9 +47,15 @@ function topicTags(topicIds) {
     .join("");
 }
 
-/** @param {string} panelId @param {string} head @param {string} foot @param {string} panel */
-function card(panelId, head, foot, panel) {
-  return `<article class="card">
+const NEW_BADGE = '<span class="new">New</span>';
+
+/**
+ * Carte accordéon. Une carte « nouvelle » (dernier import) est bordée et porte le badge New.
+ * @param {{ id: string, head: string, foot: string, panel: string, isNew: boolean }} c
+ */
+function card({ id, head, foot, panel, isNew }) {
+  const panelId = `p-${id}`;
+  return `<article class="card${isNew ? " is-new" : ""}" id="c-${id}">
     <button class="toggle" aria-expanded="false" aria-controls="${panelId}">
       ${head}
       <div class="foot"><span>${foot}</span>${ICON_CHEVRON}</div>
@@ -58,24 +65,28 @@ function card(panelId, head, foot, panel) {
 }
 
 /** @param {string} url */
-const reelLink = (url) => `<a class="link" href="${esc(url)}" target="_blank" rel="noopener">Voir le Reel ${ICON_EXTERNAL}</a>`;
+const instagramLink = (url) => `<a class="link" href="${esc(url)}" target="_blank" rel="noopener">Voir sur Instagram ${ICON_EXTERNAL}</a>`;
+
+/** Lien interne : ouvre la carte du Reel dans l'onglet Reels. @param {string} reelId */
+const readReelLink = (reelId) => `<button class="link" type="button" data-reel="${esc(reelId)}">Lire le Reel ${ICON_ARROW}</button>`;
 
 /** @param {Insight} i */
 function insightCard(i) {
   const creators = i.authors.length > 1 ? `<span class="conv">${i.authors.length} créateurs</span>` : "";
   const many = i.reels.length > 1;
-  return card(
-    `p-${i.id}`,
-    `<div class="row">${topicTags(i.topics)}${creators}</div><p class="insight">${esc(i.text)}</p>`,
-    `${many ? `${i.reels.length} sources` : "1 source"} · ${esc(i.authors.join(", "))}`,
-    `<p class="label">${many ? "Reels sources" : "Reel source"}</p>` +
-      i.reels.map((r) => `<section class="src">
-        <h3>${esc(r.title)}</h3>
+  return card({
+    id: i.id,
+    isNew: i.isNew,
+    head: `<div class="row">${i.isNew ? NEW_BADGE : ""}${topicTags(i.topics)}${creators}</div><p class="insight">${esc(i.text)}</p>`,
+    foot: `${many ? `${i.reels.length} sources` : "1 source"} · ${esc(i.authors.join(", "))}`,
+    panel: `<p class="label">${many ? "Reels sources" : "Reel source"}</p>` +
+      i.reels.map((r) => `<section class="src${r.isNew ? " is-new" : ""}">
+        <h3>${r.isNew ? NEW_BADGE : ""}${esc(r.title)}</h3>
         <span class="by">${esc(r.author)} · ${formatDate(r.date)}</span>
         <p>${esc(r.summary)}</p>
-        ${reelLink(r.url)}
+        ${readReelLink(r.id)}
       </section>`).join(""),
-  );
+  });
 }
 
 /** @param {Reel} r */
@@ -83,12 +94,13 @@ function reelCard(r) {
   const takeaways = r.insights.length
     ? `<p class="label">Ce qu'on en retient</p><ul class="mini">${r.insights.map((i) => `<li>${esc(i.text)}</li>`).join("")}</ul>`
     : "";
-  return card(
-    `p-${r.id}`,
-    `<div class="row">${topicTags(r.topics)}</div><h2 class="reel-title">${esc(r.title)}</h2>`,
-    `${esc(r.author)} · ${formatDate(r.date)}`,
-    `<p class="label">Résumé</p><p>${esc(r.summary)}</p>${takeaways}${reelLink(r.url)}`,
-  );
+  return card({
+    id: r.id,
+    isNew: r.isNew,
+    head: `<div class="row">${r.isNew ? NEW_BADGE : ""}${topicTags(r.topics)}</div><h2 class="reel-title">${esc(r.title)}</h2>`,
+    foot: `${esc(r.author)} · ${formatDate(r.date)}`,
+    panel: `<p class="label">Résumé</p><p>${esc(r.summary)}</p>${takeaways}${instagramLink(r.url)}`,
+  });
 }
 
 /** @param {{ topics: string[] }[]} items */
@@ -134,6 +146,33 @@ function render() {
     : `<p class="empty">Aucun résultat${q ? ` pour « ${esc(q)} »` : ""}.</p>`;
 }
 
+/**
+ * Ouvre un Reel dans l'onglet Reels : garde le filtre de Topic s'il contient ce Reel, vide la recherche,
+ * déplie la carte et la fait défiler sous l'en-tête.
+ * @param {string} id
+ */
+function openReel(id) {
+  const data = /** @type {ViewData} */ (state.data);
+  const reel = data.reels.find((r) => r.id === id);
+  if (!reel) return;
+  state.view = "reels";
+  prefs.set("view", state.view);
+  if (state.topic !== "all" && !reel.topics.includes(state.topic)) state.topic = "all";
+  state.query = "";
+  /** @type {HTMLInputElement} */ ($("q")).value = "";
+  render();
+
+  const article = $(`c-${id}`);
+  const toggle = /** @type {HTMLElement} */ (article.querySelector(".toggle"));
+  toggle.setAttribute("aria-expanded", "true");
+  $(`p-${id}`).hidden = false;
+  const offset = /** @type {HTMLElement} */ (document.querySelector(".bar")).offsetHeight + 12;
+  window.scrollTo({ top: article.getBoundingClientRect().top + window.scrollY - offset });
+  toggle.focus({ preventScroll: true });
+  article.classList.add("flash");
+  article.addEventListener("animationend", () => article.classList.remove("flash"), { once: true });
+}
+
 // ── Événements ───────────────────────────────────────────────────────────
 
 /** @param {MouseEvent} e */
@@ -154,6 +193,9 @@ function onClick(e) {
     prefs.set("topic", state.topic);
     return render();
   }
+
+  const goto = /** @type {HTMLElement | null} */ (target.closest("[data-reel]"));
+  if (goto) return openReel(goto.dataset.reel ?? "");
 
   const toggle = target.closest(".toggle");
   if (toggle) {
