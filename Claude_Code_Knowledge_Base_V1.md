@@ -223,9 +223,10 @@ CLAUDE.md
 Context Engineering
 Hooks
 Workflows & automatisations
+Commandes
 ```
 
-« Workflows & automatisations » a été ajouté le 25/09/2026 pour les automatisations construites avec Claude ou Claude Code. Un nouveau sujet n'est ajouté qu'après validation de l'utilisatrice.
+« Workflows & automatisations » a été ajouté le 25/09/2026 pour les automatisations construites avec Claude ou Claude Code, « Commandes » le 02/10/2026 pour les commandes slash de Claude Code. Un nouveau sujet n'est ajouté qu'après validation de l'utilisatrice.
 
 #### Statuts
 
@@ -485,7 +486,7 @@ Les règles de décision sont dans `CLAUDE.md`, les procédures dans deux skills
 
 ### Interface web
 
-Page « Veille Claude Code », publiée comme artefact claude.ai (privée, partageable par invitation) :
+Page « Veille Claude Code », publiée comme artefact claude.ai (visible par tous ceux qui ont le lien) :
 
 - affiche les Insights groupés par Topic, triés par convergence, avec le résumé des Reels sources ;
 - mobile d'abord : onglets, cartes, accordéons, pas de tableau ;
@@ -947,7 +948,7 @@ La boîte Notion « 📥 À importer » et le bouton « + Ajouter » de la page 
 
 ### Partage de la page web
 
-La page est privée. Comme elle utilise une base de données (file d'attente), elle ne peut être partagée que par invitation, pas par lien public. Si un partage large devient utile, il faudrait retirer le bouton « + Ajouter » de la version partagée.
+Décidé le 02/10/2026 : la page est partagée en « Tous ceux qui ont le lien peuvent voir ». Les visiteurs voient les Insights et les résumés ; le bouton « + Ajouter » et la file d'attente restent réservés à la propriétaire et aux éditeurs (règles d'accès de la base de l'artefact).
 
 ### Plafonds d'usage de Claude Code
 

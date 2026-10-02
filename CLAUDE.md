@@ -132,13 +132,13 @@ Une seule colonne : `URL` (Title), où l'URL du Reel est collée telle quelle. A
 
 ### Sujets principaux (liste fermée)
 
-Skills · Agents · Subagents · MCP · CLAUDE.md · Context Engineering · Hooks · Workflows & automatisations
+Skills · Agents · Subagents · MCP · CLAUDE.md · Context Engineering · Hooks · Workflows & automatisations · Commandes
 
 Le champ « Sujet principal » prend obligatoirement une de ces valeurs. De nouveaux Topics peuvent apparaître, mais seulement pour des sujets réellement distincts.
 
 ## Interface web
 
-Page « Veille Claude Code » : https://claude.ai/artifact/NphDoxdMUmRvSspUdtrfxK (artefact privé tant qu'il n'est pas partagé depuis claude.ai).
+Page « Veille Claude Code » : https://claude.ai/artifact/NphDoxdMUmRvSspUdtrfxK (partagée en « Tous ceux qui ont le lien peuvent voir »).
 
 - Code (versionné), mobile d'abord, cartes et accordéons, pas de tableau :
   - `interface/index.html` : structure seule ;
@@ -151,7 +151,7 @@ Page « Veille Claude Code » : https://claude.ai/artifact/NphDoxdMUmRvSspUdtrfx
 - `interface/data.json` : les données, régénérées depuis Notion par `/publier-insights` (ignorées par git).
 - Ne contient que des Reels `traité` et leurs résumés : jamais de transcript, de caption, de Reel écarté ni de lien Notion.
 - `/ajouter-reel` republie la page à la fin de chaque import qui change quelque chose.
-- **File d'attente web** : un bouton « Ajouter », visible seulement par la propriétaire et les éditeurs, enregistre des liens dans la base de données de l'artefact (collection `inbox`, un document par shortCode). Droits : lecture de la page pour tous, `inbox` lisible et modifiable par `admin` seulement. `/ajouter-reel` sans argument la lit avec la boîte 📥 À importer, puis la vide. Conséquence : la page ne peut plus être partagée par lien public, seulement par invitation.
+- **File d'attente web** : un bouton « Ajouter », visible seulement par la propriétaire et les éditeurs, enregistre des liens dans la base de données de l'artefact (collection `inbox`, un document par shortCode). Droits : lecture de la page pour tous, `inbox` lisible et modifiable par `admin` seulement. `/ajouter-reel` sans argument la lit avec la boîte 📥 À importer, puis la vide. La page est partagée par lien (« Tous ceux qui ont le lien peuvent voir ») : tout visiteur voit les Insights et les résumés, mais ni le bouton ni la file.
 - Republier la page sans passer `capabilities` (elles sont conservées) ; passer `{}` les supprimerait et casserait la file.
 
 ## Données Apify

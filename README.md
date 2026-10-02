@@ -42,7 +42,7 @@ Règle centrale : **enrichir plutôt que dupliquer**. Un Reel déjà en base n'e
    ```
 
    Sans argument, la commande traite les deux files d'attente puis les vide. On peut aussi lui passer directement des liens : `/ajouter-reel <url> <url>`.
-3. **Consulter** la page web, mise à jour automatiquement à la fin de l'import : https://claude.ai/artifact/NphDoxdMUmRvSspUdtrfxK (privée, partageable par invitation depuis son menu Partager).
+3. **Consulter** la page web, mise à jour automatiquement à la fin de l'import : https://claude.ai/artifact/NphDoxdMUmRvSspUdtrfxK (visible par tous ceux qui ont le lien).
 
 Pour republier la page sans importer de Reel (après une modification manuelle dans Notion par exemple) : `/publier-insights`.
 
@@ -101,7 +101,7 @@ L'aperçu local a besoin d'un `data.json` (lancer `/publier-insights` une fois).
 
 - **Aucun secret dans le dépôt** : les jetons Notion et Apify restent dans les variables d'environnement Windows.
 - **Minimum de données** : ni likes, ni vues, ni commentaires, ni liens vidéo. Les Reels non pertinents sont gardés en fiche minimale (statut `écarté`) uniquement pour ne pas les re-scraper.
-- **La page web** ne contient que les Reels traités, leurs résumés et les Insights : ni transcript, ni caption, ni lien vers Notion. Comme elle utilise une base de données pour la file d'attente, elle se partage par invitation, pas par lien public.
+- **La page web** ne contient que les Reels traités, leurs résumés et les Insights : ni transcript, ni caption, ni lien vers Notion. Elle est visible par tous ceux qui ont le lien ; la file d'attente (bouton « + Ajouter ») reste réservée à la propriétaire et aux éditeurs.
 
 ## Coûts
 
