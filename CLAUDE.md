@@ -61,7 +61,8 @@ En cas d'erreur en cours de route, laisser le Reel en `a traiter` plutôt que de
 ### Champs du Reel
 
 - **Reel** (titre) : court, en français, dit ce qu'on apprend (pas le titre accrocheur de la vidéo).
-- **Résumé** : 2 à 4 phrases, factuelles, basées sur le transcript.
+- **Résumé** : 2 à 4 phrases, factuelles, basées sur le transcript, toujours en français (traduire si le Reel est dans une autre langue).
+- **Transcript** et **Caption** : stockés dans leur langue d'origine, sans traduction.
 - **Caption** : la stocker seulement si elle parle du contenu du Reel. Si elle ne contient qu'un appel à l'action (« commente X », « abonne-toi pour le guide »…) : laisser vide.
 - **Date import** : date du jour.
 
@@ -132,7 +133,7 @@ Une seule colonne : `URL` (Title), où l'URL du Reel est collée telle quelle. A
 
 ### Sujets principaux (liste fermée)
 
-Skills · Agents · Subagents · MCP · CLAUDE.md · Context Engineering · Hooks · Workflows & automatisations · Commandes
+Skills · Agents · Subagents · MCP · CLAUDE.md · Context Engineering · Hooks · Workflows & automatisations · Commandes · Mods
 
 Le champ « Sujet principal » prend obligatoirement une de ces valeurs. De nouveaux Topics peuvent apparaître, mais seulement pour des sujets réellement distincts.
 

@@ -204,9 +204,9 @@ Chaque Reel correspond à une entrée.
 | **Auteur** | Text | Créateur |
 | **Date** | Date | Date de publication |
 | **Date import** | Date | Date d'intégration dans la base |
-| **Caption** | Text | Description Instagram, seulement si elle parle du contenu |
-| **Transcript** | Text | Transcription du contenu |
-| **Résumé** | Text | Synthèse du Reel (2 à 4 phrases) |
+| **Caption** | Text | Description Instagram, seulement si elle parle du contenu (langue d'origine) |
+| **Transcript** | Text | Transcription du contenu (langue d'origine, sans traduction) |
+| **Résumé** | Text | Synthèse du Reel (2 à 4 phrases), toujours en français |
 | **Sujet principal** | Select | Sujet principal identifié |
 | **Topics liés** | Relation → Topics | Sujets concernés |
 | **💡 Insights associés** | Relation → Insights | Informations extraites (synchronisée avec `Source`) |
@@ -224,9 +224,10 @@ Context Engineering
 Hooks
 Workflows & automatisations
 Commandes
+Mods
 ```
 
-« Workflows & automatisations » a été ajouté le 25/09/2026 pour les automatisations construites avec Claude ou Claude Code, « Commandes » le 02/10/2026 pour les commandes slash de Claude Code. Un nouveau sujet n'est ajouté qu'après validation de l'utilisatrice.
+« Workflows & automatisations » a été ajouté le 25/09/2026 pour les automatisations construites avec Claude ou Claude Code, « Commandes » le 02/10/2026 pour les commandes slash de Claude Code, « Mods » le 16/10/2026 pour la fonctionnalité de personnalisation de Claude Code. Un nouveau sujet n'est ajouté qu'après validation de l'utilisatrice.
 
 #### Statuts
 
@@ -259,7 +260,7 @@ Plusieurs Reels peuvent alimenter le même Topic.
 
 ### Topics actuels
 
-Un Topic par sujet principal de la liste fermée (section 8). La liste évolue lorsque le traitement détecte un sujet réellement distinct, après validation.
+Un Topic par sujet principal de la liste fermée (section 8), soit 10 au 16/10/2026 : Skills, Agents, Subagents, MCP, CLAUDE.md, Context engineering, Hooks, Workflows & automatisations, Commandes, Mods. La liste évolue lorsque le traitement détecte un sujet réellement distinct, après validation.
 
 ### Structure d'une page Topic
 
@@ -786,10 +787,10 @@ Seuls ces champs sont lus : `shortCode`, `ownerFullName`, `ownerUsername`, `time
 | **Auteur** | `ownerFullName`, avec `ownerUsername` en secours |
 | **Date** | `timestamp` |
 | **Date import** | Date du jour, générée à l'exécution |
-| **Caption** | `caption`, seulement si elle parle du contenu du Reel |
-| **Transcript** | `transcript`, découpé en blocs de 2000 caractères maximum (limite Notion) |
-| **Reel** (titre) | Absent des données : titre court généré par Claude à partir du transcript |
-| **Résumé** | Généré par Claude |
+| **Caption** | `caption`, seulement si elle parle du contenu du Reel, dans sa langue d'origine |
+| **Transcript** | `transcript`, dans sa langue d'origine, découpé en blocs de 2000 caractères maximum (limite Notion) |
+| **Reel** (titre) | Absent des données : titre court en français généré par Claude à partir du transcript |
+| **Résumé** | Généré par Claude, toujours en français (traduit si le Reel est dans une autre langue) |
 | **Sujet principal** | Choisi par Claude dans la liste fermée de la section 8 |
 | **Topics liés** | Décision de Claude après recherche parmi les Topics existants |
 | **💡 Insights associés** | Insights créés (statut `A vérifier`) ou existants auxquels le Reel est ajouté comme source |

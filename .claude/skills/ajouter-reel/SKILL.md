@@ -48,7 +48,7 @@ Les règles de décision (pertinence, sujet principal, seuils, enrichissement, I
 Pour chaque Reel, **sans rien écrire encore** :
 
 1. Pertinence (règles de `CLAUDE.md`).
-2. Si pertinent : titre, résumé, caption utile ou non, sujet principal, Topic(s), 1 à 3 Insights.
+2. Si pertinent : titre, résumé, caption utile ou non, sujet principal, Topic(s), 1 à 3 Insights. Titre, résumé et Insights sont rédigés en français même si le Reel est en anglais ; transcript et caption restent dans leur langue d'origine.
 3. Pour le rapprochement avec les Topics : lister les Topics existants (`API-query-data-source` sur 🗂️ Topics, ignorer « Template ») et lire la page des candidats (`API-retrieve-page-markdown`).
 4. Pour les Insights : lire les Insights déjà reliés au Topic cible (filtre relation `Topics contains <id>`) afin de repérer une idée identique (→ ajouter une source au lieu de créer).
 
