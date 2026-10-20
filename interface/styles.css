@@ -93,6 +93,10 @@ a { color: var(--accent); }
 
 /* ── En-tête : titre, recherche, onglets ────────────────────────────── */
 
+/* Le conteneur claude.ai décale déjà la page de la zone sûre ; seul .bar le fait,
+   sinon l'espace est compté deux fois au-dessus du titre. */
+:root { padding-top: 0; }
+
 .bar {
   position: sticky;
   top: 0;
