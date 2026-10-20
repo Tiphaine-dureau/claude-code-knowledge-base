@@ -95,7 +95,8 @@ a { color: var(--accent); }
 
 .bar {
   position: sticky;
-  top: env(safe-area-inset-top, 0px);
+  top: 0;
+  padding-top: env(safe-area-inset-top, 0px);
   z-index: 5;
   background: var(--bg);
   border-bottom: 1px solid var(--line);
