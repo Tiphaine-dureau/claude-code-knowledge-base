@@ -934,7 +934,9 @@ Le crédit gratuit couvre environ **50 à 95 Reels par mois** avec transcript (c
 
 ### Lancer le traitement sans être devant le PC
 
-Les URL s'ajoutent depuis le téléphone, mais `/ajouter-reel` se lance depuis le PC. Deux pistes, sans coût supplémentaire (incluses dans l'abonnement, l'usage compte dans les limites habituelles) :
+**Mis à jour le 20/10/2026 : la session cloud est en place.** Les variables d'environnement (jetons Notion et Apify) sont configurées dans l'environnement cloud ; `/ajouter-reel` se lance depuis l'application mobile, PC éteint, et on peut aussi y modifier le dépôt. Les blocages décrits ci-dessous pour Remote Control ne concernent plus l'usage courant. Reste ouverte la question de la Routine planifiée.
+
+Historique de la réflexion : les URL s'ajoutent depuis le téléphone, mais `/ajouter-reel` se lançait depuis le PC. Deux pistes, sans coût supplémentaire (incluses dans l'abonnement, l'usage compte dans les limites habituelles) :
 
 | Piste | Principe | Compromis |
 |---|---|---|

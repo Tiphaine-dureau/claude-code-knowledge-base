@@ -35,13 +35,17 @@ Règle centrale : **enrichir plutôt que dupliquer**. Un Reel déjà en base n'e
 1. **Repérer un Reel** et ajouter son lien, au choix :
    - dans la base Notion **📥 À importer** (depuis l'application Notion, en collant le lien) ;
    - avec le bouton **« + Ajouter »** de la page web (visible uniquement pour la propriétaire et les éditeurs).
-2. **Sur le PC**, dans une session Claude Code ouverte sur ce dossier :
+2. **Lancer le traitement**, depuis le PC ou depuis le téléphone :
+   - **PC** : dans une session Claude Code ouverte sur ce dossier ;
+   - **Téléphone** : dans l'application Claude, ouvrir une session cloud sur ce dépôt (voir « Session cloud » plus bas). Le PC peut être éteint.
+
+   Dans les deux cas, taper :
 
    ```
    /ajouter-reel
    ```
 
-   Sans argument, la commande traite les deux files d'attente puis les vide. On peut aussi lui passer directement des liens : `/ajouter-reel <url> <url>`.
+   Sans argument, la commande traite les deux files d'attente puis les vide. On peut aussi lui passer directement des liens : `/ajouter-reel <url> <url>`. Depuis le téléphone, on peut donc aussi demander des modifications du dépôt (règles, skills, page web).
 3. **Consulter** la page web, mise à jour automatiquement à la fin de l'import : https://claude.ai/artifact/NphDoxdMUmRvSspUdtrfxK (visible par tous ceux qui ont le lien).
 
 Pour republier la page sans importer de Reel (après une modification manuelle dans Notion par exemple) : `/publier-insights`.
@@ -60,6 +64,14 @@ Prérequis : l'application Claude (onglet Code), Node.js 20 ou plus, un compte N
    ```
 
 4. **Quitter complètement l'application Claude** (y compris depuis la zone de notification) puis la relancer, pour qu'elle voie les variables. Les serveurs MCP `notion` et `apify` déclarés dans `.mcp.json` démarrent alors avec le projet.
+
+### Session cloud (depuis le téléphone, PC éteint)
+
+Les sessions Claude Code cloud tournent sur les serveurs d'Anthropic : elles n'ont pas besoin du PC, contrairement à Remote Control (qui pilote une session restée ouverte sur le PC) et n'ont donc plus ses blocages.
+
+- Les mêmes variables `NOTION_TOKEN` et `APIFY_TOKEN` sont renseignées dans l'**environnement cloud** (paramètres de l'environnement, pas dans le dépôt). `.mcp.json` les lit comme sur le PC.
+- Les domaines `api.notion.com` et `api.apify.com` doivent être autorisés dans la politique réseau de l'environnement.
+- Le cloud travaille sur un clone du dépôt : tout ce qui doit survivre (règles, skills, code de la page) doit être commité et poussé. Les données de connaissance, elles, sont dans Notion et ne dépendent pas du clone.
 
 ## Organisation du dépôt
 
@@ -99,7 +111,7 @@ L'aperçu local a besoin d'un `data.json` (lancer `/publier-insights` une fois).
 
 ## Données et confidentialité
 
-- **Aucun secret dans le dépôt** : les jetons Notion et Apify restent dans les variables d'environnement Windows.
+- **Aucun secret dans le dépôt** : les jetons Notion et Apify restent dans les variables d'environnement Windows (PC) et dans l'environnement cloud (téléphone).
 - **Minimum de données** : ni likes, ni vues, ni commentaires, ni liens vidéo. Les Reels non pertinents sont gardés en fiche minimale (statut `écarté`) uniquement pour ne pas les re-scraper.
 - **La page web** ne contient que les Reels traités, leurs résumés et les Insights : ni transcript, ni caption, ni lien vers Notion. Elle est visible par tous ceux qui ont le lien ; la file d'attente (bouton « + Ajouter ») reste réservée à la propriétaire et aux éditeurs.
 
@@ -112,5 +124,5 @@ L'aperçu local a besoin d'un `data.json` (lancer `/publier-insights` une fois).
 ## Pistes à décider
 
 - **Surveillance automatique de comptes Instagram** : en pause, le coût du transcript la rend incompatible avec le plan gratuit. Piste de repli : transcription locale gratuite (yt-dlp, Whisper).
-- **Lancer le traitement sans le PC** : session Claude Code dans le cloud ou Routine planifiée. Détails et compromis dans la section 24 du document de conception.
+- **Traitement planifié** : le lancement manuel depuis le téléphone fonctionne via une session cloud. Reste à décider si une Routine (par exemple chaque soir) vaut la peine ; une Routine tourne sans utilisateur, donc les Reels incertains devraient rester dans la boîte d'entrée. Détails dans la section 24 du document de conception.
 - **Une seule file d'attente** : la boîte Notion et le bouton de la page coexistent pour l'instant ; l'une pourra être supprimée à l'usage.

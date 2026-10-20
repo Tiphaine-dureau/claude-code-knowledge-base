@@ -177,6 +177,14 @@ Accès via le serveur MCP `apify` du projet, limité à l'actor `apify/instagram
 - Messages de commit **en anglais**, courts, à l'impératif (ex. « Add web inbox to the interface »).
 - Ne commiter et pousser qu'après validation de l'utilisatrice quand elle a demandé à voir les modifications.
 
+## Sessions cloud (téléphone)
+
+Le projet se pilote aussi depuis l'application Claude du téléphone, dans une session cloud : `/ajouter-reel` y fonctionne comme sur le PC, PC éteint. Ce n'est pas du Remote Control (qui dépend d'une session ouverte sur le PC) : les blocages qui lui étaient liés ne s'appliquent plus.
+
+- Les jetons `NOTION_TOKEN` et `APIFY_TOKEN` sont fournis par les variables d'environnement de l'environnement cloud, lues par `.mcp.json`.
+- Le clone du cloud est éphémère : ce qui doit rester (règles, skills, code) doit être commité et poussé. Notion et la page web ne dépendent pas du clone.
+- Une session sans utilisatrice devant l'écran (Routine) ne peut pas poser de questions : laisser les Reels incertains dans la file d'attente.
+
 ## Secrets
 
-Aucun token (Apify, Notion…) dans ce dépôt, ni dans ce fichier, ni dans la doc. Les secrets restent dans la configuration locale des serveurs MCP ou dans un `.env` (ignoré par git).
+Aucun token (Apify, Notion…) dans ce dépôt, ni dans ce fichier, ni dans la doc. Les secrets restent dans la configuration locale des serveurs MCP, dans un `.env` (ignoré par git) ou dans les variables de l'environnement cloud.
