@@ -149,6 +149,7 @@ h1 {
   background: var(--surface);
   color: var(--fg);
   font: inherit;
+  font-size: 16px; /* évite le zoom automatique de Safari iOS au focus */
 }
 
 .search input::placeholder { color: var(--muted); }
@@ -560,7 +561,8 @@ button.link {
   background: var(--surface-2);
   color: var(--fg);
   font: inherit;
-  font-size: 14px;
+  /* 16px minimum : en dessous, Safari iOS zoome la page au focus et la feuille déborde. */
+  font-size: 16px;
   line-height: 1.45;
   resize: vertical;
 }
