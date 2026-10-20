@@ -1,16 +1,16 @@
 {
   "mcpServers": {
     "notion": {
-      "command": "cmd",
-      "args": ["/c", "npx", "-y", "@notionhq/notion-mcp-server"],
+      "command": "node",
+      "args": ["scripts/run-mcp.mjs", "@notionhq/notion-mcp-server"],
       "env": {
         "NOTION_TOKEN": "${NOTION_TOKEN}"
       }
     },
     "apify": {
-      "command": "cmd",
+      "command": "node",
       "args": [
-        "/c", "npx", "-y", "@apify/actors-mcp-server",
+        "scripts/run-mcp.mjs", "@apify/actors-mcp-server",
         "--tools", "apify/instagram-reel-scraper",
         "--telemetry-enabled", "false"
       ],
