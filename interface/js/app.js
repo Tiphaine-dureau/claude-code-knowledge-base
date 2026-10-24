@@ -113,8 +113,8 @@ function renderChips(items) {
   const nbNew = items.filter((it) => it.isNew).length;
 
   $("chips").innerHTML =
-    (nbNew ? chip(NEW_FILTER, "New", nbNew, "", '<span class="dot"></span>').replace('class="chip"', 'class="chip chip-new"') : "") +
     chip("all", "Tous", items.length) +
+    (nbNew ? chip(NEW_FILTER, "New", nbNew, "", '<span class="dot"></span>').replace('class="chip"', 'class="chip chip-new"') : "") +
     topics
       .filter((t) => counts.has(t.id))
       .sort((a, b) => (counts.get(b.id) ?? 0) - (counts.get(a.id) ?? 0))
