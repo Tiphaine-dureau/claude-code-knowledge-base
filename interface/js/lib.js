@@ -152,14 +152,27 @@ export function countByTopic(items) {
   return counts;
 }
 
+/** Identifiant du filtre « New » (ne peut pas coïncider avec un identifiant de Topic Notion). */
+export const NEW_FILTER = "new";
+
 /**
- * Filtre par Topic ("all" = tous) et par recherche plein texte (insensible aux accents et à la casse).
- * @template {{ topics: string[], hay: string }} T
+ * @param {{ topics: string[], isNew?: boolean }} item
+ * @param {string} topic
+ */
+export function matchesTopic(item, topic) {
+  if (topic === "all") return true;
+  return topic === NEW_FILTER ? Boolean(item.isNew) : item.topics.includes(topic);
+}
+
+/**
+ * Filtre par Topic ("all" = tous, "new" = nouveautés du dernier import) et par recherche plein texte
+ * (insensible aux accents et à la casse).
+ * @template {{ topics: string[], hay: string, isNew?: boolean }} T
  * @param {T[]} items
  * @param {{ topic: string, query: string }} filters
  * @returns {T[]}
  */
 export function filterItems(items, { topic, query }) {
   const q = normalize(query.trim());
-  return items.filter((it) => (topic === "all" || it.topics.includes(topic)) && (!q || it.hay.includes(q)));
+  return items.filter((it) => matchesTopic(it, topic) && (!q || it.hay.includes(q)));
 }

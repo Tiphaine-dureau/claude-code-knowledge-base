@@ -1,5 +1,5 @@
 // @ts-check
-import { countByTopic, escapeHtml as esc, filterItems, formatDate, prepareData, topicHue } from "./lib.js";
+import { NEW_FILTER, countByTopic, escapeHtml as esc, filterItems, formatDate, matchesTopic, prepareData, topicHue } from "./lib.js";
 import { initInbox } from "./inbox.js";
 
 /** @typedef {import("./lib.js").ViewData} ViewData */
@@ -103,14 +103,17 @@ function reelCard(r) {
   });
 }
 
-/** @param {{ topics: string[] }[]} items */
+/** @param {{ topics: string[], isNew?: boolean }[]} items */
 function renderChips(items) {
   const { topics } = /** @type {ViewData} */ (state.data);
   const counts = countByTopic(items);
   const chip = (/** @type {string} */ id, /** @type {string} */ label, /** @type {number} */ n, style = "", dot = "") =>
     `<button class="chip" data-topic="${id}" style="${style}" aria-pressed="${state.topic === id}">${dot}${label} <span class="c">${n}</span></button>`;
 
+  const nbNew = items.filter((it) => it.isNew).length;
+
   $("chips").innerHTML =
+    (nbNew ? chip(NEW_FILTER, "New", nbNew, "", '<span class="dot"></span>').replace('class="chip"', 'class="chip chip-new"') : "") +
     chip("all", "Tous", items.length) +
     topics
       .filter((t) => counts.has(t.id))
@@ -130,7 +133,7 @@ function updateChipsFade() {
 function render() {
   const data = /** @type {ViewData} */ (state.data);
   const all = state.view === "insights" ? data.insights : data.reels;
-  if (state.topic !== "all" && !all.some((it) => it.topics.includes(state.topic))) state.topic = "all";
+  if (state.topic !== "all" && !all.some((it) => matchesTopic(it, state.topic))) state.topic = "all";
 
   for (const tab of document.querySelectorAll(".tab")) {
     tab.setAttribute("aria-selected", String(/** @type {HTMLElement} */ (tab).dataset.view === state.view));
@@ -157,7 +160,7 @@ function openReel(id) {
   if (!reel) return;
   state.view = "reels";
   prefs.set("view", state.view);
-  if (state.topic !== "all" && !reel.topics.includes(state.topic)) state.topic = "all";
+  if (state.topic !== "all" && !matchesTopic(reel, state.topic)) state.topic = "all";
   state.query = "";
   /** @type {HTMLInputElement} */ ($("q")).value = "";
   render();

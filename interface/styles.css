@@ -249,6 +249,9 @@ h1 {
 
 .chip .c { color: var(--muted); }
 
+.chip-new .dot { background: var(--accent); }
+.chip-new[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+
 .chip[aria-pressed="true"] {
   border-color: transparent;
   background: hsl(var(--h, 226) var(--s, 52%) var(--tag-bg-l));

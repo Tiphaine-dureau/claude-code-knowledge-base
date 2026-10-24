@@ -98,6 +98,12 @@ test("filterItems : par Topic, par recherche sans accents, et combinés", () => 
   assert.deepEqual(ids(filterItems(insights, { topic: "all", query: "introuvable" })), []);
 });
 
+test("filterItems : le filtre « new » ne garde que les nouveautés", () => {
+  const { insights, reels } = prepareData(fixture());
+  assert.deepEqual(filterItems(insights, { topic: "new", query: "" }).map((i) => i.id), ["i2"]);
+  assert.deepEqual(filterItems(reels, { topic: "new", query: "" }).map((r) => r.id), ["rB"]);
+});
+
 test("prepareData : nouveaux = Reels du dernier import et Insights qui en ont une source", () => {
   const data = prepareData(fixture());
   assert.equal(data.lastImport, "2026-09-28");
